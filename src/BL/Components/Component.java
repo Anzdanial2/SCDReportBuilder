@@ -1,4 +1,4 @@
-package BL;
+package BL.Components;
 
 public abstract class Component {
 	public void setData(){
