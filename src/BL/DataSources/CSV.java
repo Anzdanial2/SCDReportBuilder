@@ -1,35 +1,51 @@
 package BL.DataSources;
-
+import BL.Components.CustomPoint;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.io.IOException;
 
 public class CSV extends DataSource{
+	private String fileName;
+	private ArrayList<CustomPoint> csvData;
+	private String []legends;
+	public CSV(String fileName){
+		this.fileName = fileName;
+		csvData = new ArrayList<>();
+	}
+	public ArrayList<CustomPoint> getCSVData(){
+		return csvData;
+	}
+	public String [] getLegends(){return legends;}
 	public void load(){
-<<<<<<< HEAD
-		
-=======
-		String file = "sample.csv";
-		String line;
-		List<String> headers = new ArrayList<>();
-		List<Integer> column1 = new ArrayList<>();
-		List<Integer> column2 = new ArrayList<>();
-		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-			headers = Arrays.asList(br.readLine().split(","));
-			while ((line = br.readLine()) != null) {
-				String[] values = line.split(",");
-				column1.add(Integer.parseInt(values[0]));
-				column2.add(Integer.parseInt(values[1]));
+		try{
+			BufferedReader reader = new BufferedReader(new FileReader(fileName));
+			String temp = "";
+			boolean flag = false;
+			while((temp = reader.readLine())!=null){
+				if(!flag){
+					flag = true;
+
+					continue;
+				}
+				String[] values = temp.split(",");
+				values[0] = values[0].trim();
+				values[1] = values[1].trim();
+				CustomPoint point = new CustomPoint(Double.parseDouble(values[0]),Double.parseDouble(values[1]));
+				csvData.add(point);
 			}
-		} catch (Exception e) {
-			System.out.println(e);
 		}
-		System.out.println("Headers: " + headers);
-		System.out.println("Column 1: " + column1);
-		System.out.println("Column 2: " + column2);
->>>>>>> d7d02f30dc480486b1a98ad99794e202a2fd45cf
+		catch (IOException ex){
+			ex.printStackTrace();
+		}
+
+		try{
+			BufferedReader reader1 = new BufferedReader(new FileReader(fileName));
+			String temp = reader1.readLine();
+			legends = temp.split(",");
+		}
+		catch (IOException ex){
+			ex.printStackTrace();
+		}
 	}
 }

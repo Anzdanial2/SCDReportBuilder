@@ -5,11 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class canvas extends JFrame{
-<<<<<<< HEAD
 	private Component Image;
-	public canvas(){
-	}
-=======
 	public canvas() {
 		setTitle("Image Display");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,15 +28,4 @@ public class canvas extends JFrame{
 			frame.setVisible(true);
 		});
 	}
-//	public canvas(){
-//		setTitle("Report Builder");
-//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		ImageIcon logo = new ImageIcon("FASTLOGO.png");
-//		setLayout(new BorderLayout());
-//
-//	}
-//
-//	public static void main(String []args){
-//	}
->>>>>>> d7d02f30dc480486b1a98ad99794e202a2fd45cf
 }
