@@ -7,14 +7,12 @@ import java.io.IOException;
 
 public class CSV extends DataSource{
 	private String fileName;
-	private ArrayList<CustomPoint> csvData;
-	private String []legends;
 	public CSV(String fileName){
 		this.fileName = fileName;
-		csvData = new ArrayList<>();
+		readData = new ArrayList<>();
 	}
-	public ArrayList<CustomPoint> getCSVData(){
-		return csvData;
+	public ArrayList<CustomPoint> getData(){
+		return readData;
 	}
 	public String [] getLegends(){return legends;}
 	public void load(){
@@ -32,7 +30,7 @@ public class CSV extends DataSource{
 				values[0] = values[0].trim();
 				values[1] = values[1].trim();
 				CustomPoint point = new CustomPoint(Double.parseDouble(values[0]),Double.parseDouble(values[1]));
-				csvData.add(point);
+				readData.add(point);
 			}
 		}
 		catch (IOException ex){

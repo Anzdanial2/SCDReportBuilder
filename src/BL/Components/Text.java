@@ -1,12 +1,17 @@
 package BL.Components;
 
+import BL.DataSources.DataSource;
+
 import javax.swing.*;
 import java.awt.*;
 
+
+//Modify later
 public class Text extends Component{
 	private JPanel textPanel;
 	private String textInput;
-	public Text(String textInput){
+	public Text(String textInput, DataSource dataSource){
+		super(dataSource);
 		textPanel = new JPanel();
 		this.textInput = textInput;
 	}
@@ -17,7 +22,7 @@ public class Text extends Component{
 		sample2.setFont(new Font("Arial", Font.BOLD, 14));
 		textPanel.add(sample2);
 	}
-	public JPanel getTextPanel(){
+	public JComponent getPanel(){
 		return textPanel;
 	}
 }

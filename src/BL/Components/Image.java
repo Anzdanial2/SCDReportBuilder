@@ -1,12 +1,15 @@
 package BL.Components;
 
+import BL.DataSources.DataSource;
+
 import java.awt.*;
 import javax.swing.*;
 
 public class Image extends Component{
 	private String imagePath;
 	private JPanel imagePanel;
-	public Image(String imagePath){
+	public Image(String imagePath, DataSource dataSource){
+		super(dataSource);
 		imagePanel = new JPanel(new BorderLayout());
 		this.imagePath = imagePath;
 	}
@@ -22,7 +25,7 @@ public class Image extends Component{
 		imagePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		imagePanel.add(logoLabel);
 	}
-	public JPanel getImagePanel(){
+	public JComponent getPanel(){
 		return imagePanel;
 	}
 }
