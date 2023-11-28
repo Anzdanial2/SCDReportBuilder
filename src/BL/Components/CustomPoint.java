@@ -1,15 +1,18 @@
 package BL.Components;
 
 public class CustomPoint {
-	private double x;
+	private Object x;
 	private double y;
-	public CustomPoint(double x, double y) {
+
+	public CustomPoint(Object x, double y) {
 		this.x = x;
 		this.y = y;
 	}
-	public double getX() {
+
+	public Object getX() {
 		return x;
 	}
+
 	public double getY() {
 		return y;
 	}

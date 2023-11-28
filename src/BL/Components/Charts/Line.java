@@ -52,7 +52,7 @@ public class Line extends Chart {
 
 		// Draw X-axis labels
 		for (int i = 0; i < dataPoints.size(); i++) {
-			double xValue = dataPoints.get(i).getX();
+			double xValue = (double) dataPoints.get(i).getX();
 			int x = 50 + i * (getWidth() - 100) / (dataPoints.size() - 1);
 			int y = getHeight() - 50;
 			g.drawString(String.valueOf(xValue), x - 10, y + 15);
@@ -69,7 +69,7 @@ public class Line extends Chart {
 		// Draw Line Chart
 		g.setColor(Color.BLUE);
 		for (int i = 0; i < dataPoints.size(); i++) {
-			double xValue = dataPoints.get(i).getX();
+			double xValue = (double) dataPoints.get(i).getX();
 			double yValue = dataPoints.get(i).getY();
 
 			int x = 50 + i * (getWidth() - 100) / (dataPoints.size() - 1);
@@ -79,7 +79,7 @@ public class Line extends Chart {
 
 			// Draw line connecting points
 			if (i > 0) {
-				double prevXValue = dataPoints.get(i - 1).getX();
+				double prevXValue = (double) dataPoints.get(i - 1).getX();
 				double prevYValue = dataPoints.get(i - 1).getY();
 
 				int prevX = 50 + (i - 1) * (getWidth() - 100) / (dataPoints.size() - 1);
