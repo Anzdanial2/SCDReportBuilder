@@ -1,5 +1,8 @@
 package BL.Components.Charts;
 
+import DataLayer.DataSource;
+import DataLayer.Database;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
@@ -12,19 +15,30 @@ public class Bar extends Chart {
 
 	private Map<String, Integer> data;
 
-	public Bar() {
+	public Bar(DataSource dataSource) {
+		super(dataSource);
+	}
+
+	@Override
+	protected void draw() {
 		setBackground(Color.WHITE);
 		initData();
 	}
 
+	@Override
+	public JComponent getPanel() {
+		return this;
+	}
+
 	private void initData() {
 		data = new HashMap<>();
-		data.put("Category A", 10);
-		data.put("Category B", 40);
-		data.put("Category C", 30);
-		data.put("Category D", 5);
-		data.put("Anas Asim", 64);
+		setData();
+		for(int i = 0; i < customPointList.size(); i++) {
+			data.put((String) customPointList.get(i).getX(), (int) customPointList.get(i).getY());
+		}
 	}
+
+
 
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -104,7 +118,8 @@ public class Bar extends Chart {
 			frame.setSize(600, 400);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-			Bar bar = new Bar();
+			Bar bar = new Bar(new Database(Database.ChartType.BAR));
+			bar.draw();
 			frame.add(bar);
 
 			frame.setVisible(true);

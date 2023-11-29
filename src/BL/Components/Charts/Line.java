@@ -1,6 +1,7 @@
 package BL.Components.Charts;
 
 import BL.Components.CustomPoint;
+import DataLayer.DataSource;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,12 +12,10 @@ public class Line extends Chart {
 	private String xLabel;
 	private String yLabel;
 	private Graphics g;
-	public Line(Graphics g){
+	public Line(Graphics g, DataSource dataSource){
+		super(dataSource);
 		dataPoints = new ArrayList<>();
 		this.g = g;
-	}
-	public Line(ArrayList<CustomPoint> dataPoints) {
-		this.dataPoints = dataPoints;
 	}
 
 	public void setxLabel(String xLabel) {
@@ -88,5 +87,25 @@ public class Line extends Chart {
 				g.drawLine(prevX, prevY, x, y);
 			}
 		}
+	}
+
+	public static void main(String []args){
+		JFrame frame = new JFrame("Line Chart Example");
+		ArrayList<CustomPoint> data = new ArrayList<>();
+		data.add(new CustomPoint(0,10));
+		data.add(new CustomPoint(10,20));
+		data.add(new CustomPoint(20,40));
+		data.add(new CustomPoint(30,20));
+//		Line lineChart = new Line(data);
+//		frame.add(lineChart);
+
+		frame.setSize(600, 400);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+	}
+
+	@Override
+	public JComponent getPanel() {
+		return this;
 	}
 }

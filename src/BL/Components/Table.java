@@ -1,11 +1,9 @@
 package BL.Components;
 
-import BL.DataSources.CSV;
-import BL.DataSources.DataSource;
+import DataLayer.DataSource;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.util.ArrayList;
 
 public class Table extends Component{
 	private JScrollPane tablePanel;

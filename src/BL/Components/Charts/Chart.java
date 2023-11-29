@@ -1,12 +1,14 @@
 package BL.Components.Charts;
 
-import javax.swing.*;
+import BL.Components.Component;
+import DataLayer.DataSource;
 
-public abstract class Chart extends JPanel {
+public abstract class Chart extends Component {
+	public Chart(DataSource datasource) {
+		super(datasource);
+	}
+
 	public void display(){
-
 	}
-	protected void draw(){
-
-	}
+	protected abstract void draw();
 }

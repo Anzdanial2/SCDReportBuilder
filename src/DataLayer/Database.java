@@ -1,4 +1,4 @@
-package BL.DataSources;
+package DataLayer;
 
 import BL.Components.CustomPoint;
 
@@ -15,14 +15,15 @@ public class Database extends DataSource {
 	private static final String TABLE_NAME_LINE = "LINECHART";
 	private static final String TABLE_NAME_BAR = "BARCHART";
 	private static final String TABLE_NAME_PIE = "PIECHART";
+	public Database(ChartType chartType) {
+		readData = new ArrayList<>();
+		this.chartType = chartType;
+	}
 
 	// Enum for ChartType
 	public enum ChartType {
 		LINE, BAR, PIE
 	}
-
-	// Chart type and corresponding table names and queries
-
 
 	private String getTableName() {
 		switch (chartType) {
@@ -41,12 +42,18 @@ public class Database extends DataSource {
 		return "SELECT * FROM " + getTableName();
 	}
 
-	public Database(ChartType chartType) {
-		this.chartType = chartType;
+	@Override
+	public ArrayList<CustomPoint> getData() {
+		return readData;
 	}
 
 	@Override
-	public ArrayList<CustomPoint> getData() {
+	public String[] getLegends() {
+		return legends;
+	}
+
+	@Override
+	public void load() {
 		try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
 			 PreparedStatement preparedStatement = connection.prepareStatement(getSelectQuery());
 			 ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -67,11 +74,6 @@ public class Database extends DataSource {
 			e.printStackTrace();
 		}
 
-		return readData != null ? readData : new ArrayList<>();
-	}
-
-	@Override
-	public String[] getLegends() {
 		try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
 			 PreparedStatement preparedStatement = connection.prepareStatement(getSelectQuery());
 			 ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -87,18 +89,12 @@ public class Database extends DataSource {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		return legends != null ? legends : new String[0];
-	}
-
-	@Override
-	public void load() {
-		// You can perform additional loading tasks if needed
 	}
 
 	public static void main(String[] args) {
 		// Create an instance of Database for a specific chart type
 		Database lineChartDatabase = new Database(ChartType.LINE);
+		lineChartDatabase.load();
 
 		// Test getData() method
 		ArrayList<CustomPoint> data = lineChartDatabase.getData();
@@ -116,6 +112,7 @@ public class Database extends DataSource {
 
 
 		Database BarChartDatabase = new Database(ChartType.BAR);
+		BarChartDatabase.load();
 
 		// Test getData() method
 		ArrayList<CustomPoint> dataBar = BarChartDatabase.getData();
@@ -130,5 +127,6 @@ public class Database extends DataSource {
 		for (String legend : legendsBar) {
 			System.out.println(legend);
 		}
+
 	}
 }

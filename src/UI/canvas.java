@@ -1,23 +1,31 @@
 package UI;
+
 import BL.Components.Charts.Bar;
 import BL.Components.Charts.Chart;
 import BL.Components.Component;
 import BL.Components.Image;
 import BL.Components.Table;
-import BL.DataSources.CSV;
+import DataLayer.CSV;
+import DataLayer.Database;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
-import java.awt.image.BufferedImage;
-import java.awt.print.*;
-import java.io.File;
-import java.io.IOException;
 import javax.imageio.ImageIO;
-import javax.print.PrintService;
-import javax.print.PrintServiceLookup;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
-public class canvas extends JFrame{
+public class canvas extends JFrame {
 	public canvas() {
 		setTitle("Report Builder");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,119 +44,78 @@ public class canvas extends JFrame{
 		add(table.getPanel(), BorderLayout.EAST);
 
 		// Create an instance of the Bar chart
-		Chart barChart = new Bar();
+		Chart barChart = new Bar(new Database(Database.ChartType.BAR));
 		JPanel chartPanel = new JPanel(new BorderLayout());
 		chartPanel.add(barChart, BorderLayout.CENTER);
 		chartPanel.setPreferredSize(new Dimension(500, 400));
 		add(chartPanel, BorderLayout.WEST);
 
+		JButton exportButton = new JButton("Export to PDF");
+		exportButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				exportToPDF();
+			}
+		});
 
-		JButton exportButton = new JButton("Export as PNG");
-		exportButton.addActionListener(e -> exportAsPNG());
-		add(exportButton, BorderLayout.SOUTH);
-
-//		JButton exportButton1 = new JButton("Export as PDF");
-//		exportButton1.addActionListener(e -> exportAsPDF());
-//		add(exportButton1, BorderLayout.SOUTH);
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.add(exportButton);
+		add(buttonPanel, BorderLayout.SOUTH);
 
 		setVisible(true);
-
 	}
 
-	private void exportAsPNG() {
-		try {
-			// Get the content pane bounds
-			Rectangle contentPaneBounds = getContentPane().getBounds();
+	public void exportToPDF() {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle("Save PDF File");
+		fileChooser.setFileFilter(new FileNameExtensionFilter("PDF Files (*.pdf)", "pdf"));
+		int userSelection = fileChooser.showSaveDialog(this);
 
-			// Create a robot
-			Robot robot = new Robot();
-
-			// Capture the content pane only
-			BufferedImage screenshot = robot.createScreenCapture(
-					new Rectangle(getLocationOnScreen().x + contentPaneBounds.x,
-							getLocationOnScreen().y + contentPaneBounds.y,
-							contentPaneBounds.width, contentPaneBounds.height)
-			);
-
-			// Show a file chooser for saving the PNG
-			JFileChooser fileChooser = new JFileChooser();
-			fileChooser.setDialogTitle("Save As");
-			fileChooser.setFileFilter(new FileNameExtensionFilter("PNG files", "png"));
-
-			int userSelection = fileChooser.showSaveDialog(this);
-			if (userSelection == JFileChooser.APPROVE_OPTION) {
-				File fileToSave = fileChooser.getSelectedFile();
-				if (!fileToSave.getName().toLowerCase().endsWith(".png")) {
-					fileToSave = new File(fileToSave.getAbsolutePath() + ".png");
-				}
-				ImageIO.write(screenshot, "png", fileToSave);
-				JOptionPane.showMessageDialog(this, "Export successful!");
+		if (userSelection == JFileChooser.APPROVE_OPTION) {
+			File fileToSave = fileChooser.getSelectedFile();
+			if (!fileToSave.getName().toLowerCase().endsWith(".pdf")) {
+				fileToSave = new File(fileToSave.getParentFile(), fileToSave.getName() + ".pdf");
 			}
-		} catch (AWTException | IOException ex) {
-			ex.printStackTrace();
-			JOptionPane.showMessageDialog(this, "Export failed!");
+
+			try {
+				PDDocument document = new PDDocument();
+				PDPage page = new PDPage(PDRectangle.A4);
+				page.setRotation(90); // Set page orientation to landscape
+				document.addPage(page);
+
+				try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
+					BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
+					paint(image.getGraphics());
+
+					float scaleX = page.getMediaBox().getWidth() / (float) image.getWidth();
+					float scaleY = page.getMediaBox().getHeight() / (float) image.getHeight();
+					float scale = Math.min(scaleX, scaleY);
+
+					float x = (page.getMediaBox().getWidth() - image.getWidth() * scale) / 2;
+					float y = (page.getMediaBox().getHeight() - image.getHeight() * scale) / 2;
+
+					PDImageXObject pdImage = LosslessFactory.createFromImage(document, image);
+					contentStream.drawImage(pdImage, x, y, pdImage.getWidth() * scale, pdImage.getHeight() * scale);
+				}
+
+				document.save(fileToSave.getAbsolutePath());
+				document.close();
+
+				JOptionPane.showMessageDialog(this, "PDF exported successfully to:\n" + fileToSave.getAbsolutePath(),
+						"Export Successful", JOptionPane.INFORMATION_MESSAGE);
+			} catch (IOException e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(this, "Error exporting PDF:\n" + e.getMessage(),
+						"Export Error", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 
-//	private void exportAsPDF() {
-//		try {
-//			// Create a temporary file for storing the screenshot
-//			File tempFile = File.createTempFile("screenshot", ".png");
-//
-//			// Get the content pane bounds
-//			Rectangle contentPaneBounds = getContentPane().getBounds();
-//
-//			// Create a robot
-//			Robot robot = new Robot();
-//
-//			// Capture the content pane only
-//			BufferedImage screenshot = robot.createScreenCapture(
-//					new Rectangle(getLocationOnScreen().x + contentPaneBounds.x,
-//							getLocationOnScreen().y + contentPaneBounds.y,
-//							contentPaneBounds.width, contentPaneBounds.height)
-//			);
-//
-//			// Save the screenshot to the temporary file
-//			ImageIO.write(screenshot, "png", tempFile);
-//
-//			// Show a file chooser for saving the PDF
-//			JFileChooser fileChooser = new JFileChooser();
-//			fileChooser.setDialogTitle("Save As");
-//			fileChooser.setFileFilter(new FileNameExtensionFilter("PDF files", "pdf"));
-//
-//			int userSelection = fileChooser.showSaveDialog(this);
-//			if (userSelection == JFileChooser.APPROVE_OPTION) {
-//				File fileToSave = fileChooser.getSelectedFile();
-//				if (!fileToSave.getName().toLowerCase().endsWith(".pdf")) {
-//					fileToSave = new File(fileToSave.getAbsolutePath() + ".pdf");
-//				}
-//
-//				// Create a Document
-//				Document document = new Document();
-//				PdfWriter.getInstance(document, new FileOutputStream(fileToSave));
-//
-//				// Open the document for writing
-//				document.open();
-//
-//				// Add the screenshot to the PDF
-//				com.itextpdf.text.Image image = com.itextpdf.text.Image.getInstance(tempFile.getAbsolutePath());
-//				document.add(image);
-//
-//				// Close the document
-//				document.close();
-//
-//				JOptionPane.showMessageDialog(this, "Export successful!");
-//			}
-//
-//			// Delete the temporary file
-//			tempFile.delete();
-//
-//		} catch (AWTException | IOException | DocumentException ex) {
-//			ex.printStackTrace();
-//			JOptionPane.showMessageDialog(this, "Export failed!");
-//		}
-//	}
-
+	private byte[] imageToByteArray(BufferedImage image) throws IOException {
+		File tempFile = File.createTempFile("tempImage", ".png");
+		ImageIO.write(image, "png", tempFile);
+		return Files.readAllBytes(tempFile.toPath());
+	}
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {

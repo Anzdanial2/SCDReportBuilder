@@ -1,11 +1,11 @@
 package BL.Components;
 
-import BL.DataSources.DataSource;
+import DataLayer.DataSource;
 
 import javax.swing.*;
 import java.util.ArrayList;
 
-public abstract class Component {
+public abstract class Component extends JPanel{
 	protected ArrayList<CustomPoint> customPointList;
 	protected String []legends;
 	protected DataSource datasource;

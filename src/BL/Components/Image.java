@@ -1,6 +1,6 @@
 package BL.Components;
 
-import BL.DataSources.DataSource;
+import DataLayer.DataSource;
 
 import java.awt.*;
 import javax.swing.*;
