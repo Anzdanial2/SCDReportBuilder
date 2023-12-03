@@ -3,7 +3,14 @@ package UI;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
-//Upper Cards here
+/**
+ * The {@code UpperCards} class represents the upper section of the Report Builder graphical user interface (GUI).
+ * It includes components for entering the title, selecting various report components, and configuring their options.
+ * The class provides methods to access and retrieve different UI components for interaction and configuration.
+ *
+ * @author abdullah sami
+ * @version 1.0
+ */
 public class UpperCards {
     ReportUI reportUI;
     JLabel titleLabel;
@@ -58,6 +65,11 @@ public class UpperCards {
     Font titleFieldFont;
     Font componentFont;
     JPanel imagePanel3;
+    /**
+     * Constructs an instance of the {@code UpperCards} class, representing the upper section of the Report Builder GUI.
+     * This constructor initializes Swing components such as JLabels, JTextFields, JCheckBoxes, JRadioButtons,
+     * ButtonGroups, JButtons, and JPanels to create a structured and styled user interface for configuring reports.
+     */
     public UpperCards(){
         fieldFont = new Font("SansSerif", Font.PLAIN, 15);
         titleFieldFont = new Font("SansSerif", Font.BOLD, 20);
@@ -218,6 +230,12 @@ public class UpperCards {
 
     }
     // Helper method to set background color for a panel and its child components
+    /**
+     * Sets the background color for the specified container and its child components recursively.
+     *
+     * @param container The container whose background color needs to be set.
+     * @param color     The color to set as the background.
+     */
     private void setPanelBackground(Container container, Color color) {
         container.setBackground(color);
         for (Component component : container.getComponents()) {
@@ -237,42 +255,69 @@ public class UpperCards {
         }
         reportUI.showFrame();
     }
+    /**
+     * Returns the {@code JLabel} representing the title label in the GUI.
+     *
+     * @return The {@code JLabel} for the title.
+     */
     public JLabel getTitleLabel() {
         return titleLabel;
     }
 
+    /**
+     * Returns the {@code JTextField} representing the title input field in the GUI.
+     *
+     * @return The {@code JTextField} for entering the title.
+     */
     public JTextField getTitleField() {
         return titleField;
     }
-
     public JLabel getSelectComponentsLabel() {
         return selectComponentsLabel;
     }
-
+    /**
+     * Returns the {@code JCheckBox} for selecting the "Text" component in the GUI.
+     *
+     * @return The {@code JCheckBox} for selecting the "Text" component.
+     */
     public JCheckBox getTextCheckBox() {
         return textCheckBox;
     }
-
     public JLabel getTextDataSourceLabel() {
         return textDataSourceLabel;
     }
-
+    /**
+     * Returns the {@code JRadioButton} for selecting the "txt file" data source for the "Text" component in the GUI.
+     *
+     * @return The {@code JRadioButton} for selecting the "txt file" data source for the "Text" component.
+     */
     public JRadioButton getTextTxtBtn() {
         return textTxtBtn;
     }
-
+    /**
+     * Returns the {@code JRadioButton} for selecting the "Data Base" data source for the "Text" component in the GUI.
+     *
+     * @return The {@code JRadioButton} for selecting the "Data Base" data source for the "Text" component.
+     */
     public JRadioButton getTextDbBtn() {
         return textDbBtn;
     }
-
+    /**
+     * Returns the {@code ButtonGroup} for managing the radio buttons for the data source of the "Text" component in the GUI.
+     *
+     * @return The {@code ButtonGroup} for managing the radio buttons for the data source of the "Text" component.
+     */
     public ButtonGroup getTextSource() {
         return textSource;
     }
-
+    /**
+     * Returns the {@code JButton} for choosing the file for the "Text" component in the GUI.
+     *
+     * @return The {@code JButton} for choosing the file for the "Text" component.
+     */
     public JButton getTextFileChooserBtn() {
         return textFileChooserBtn;
     }
-
     public JLabel getTextDbLabel() {
         return textDbLabel;
     }
@@ -280,15 +325,27 @@ public class UpperCards {
     public JTextField getTextDbField() {
         return textDbField;
     }
-
+    /**
+     * Returns the {@code JCheckBox} for selecting the "Table" component in the GUI.
+     *
+     * @return The {@code JCheckBox} for selecting the "Table" component.
+     */
     public JCheckBox getTableCheckBox() {
         return tableCheckBox;
     }
-
+    /**
+     * Returns the {@code JCheckBox} for selecting the "Image/Logo" component in the GUI.
+     *
+     * @return The {@code JCheckBox} for selecting the "Image/Logo" component.
+     */
     public JCheckBox getImageCheckBox() {
         return imageCheckBox;
     }
-
+    /**
+     * Returns the {@code JButton} for choosing the image for the "Image/Logo" component in the GUI.
+     *
+     * @return The {@code JButton} for choosing the image for the "Image/Logo" component.
+     */
     public JButton getImageFileChooserBtn() {
         return imageFileChooserBtn;
     }
@@ -296,15 +353,27 @@ public class UpperCards {
     public JLabel getImageSourceLabel() {
         return imageSourceLabel;
     }
-
+    /**
+     * Returns the {@code JRadioButton} for selecting the "Data Base" data source for the "Image/Logo" component in the GUI.
+     *
+     * @return The {@code JRadioButton} for selecting the "Data Base" data source for the "Image/Logo" component.
+     */
     public JRadioButton getImageDbBtn() {
         return imageDbBtn;
     }
-
+    /**
+     * Returns the {@code JRadioButton} for selecting the "png" data source for the "Image/Logo" component in the GUI.
+     *
+     * @return The {@code JRadioButton} for selecting the "png" data source for the "Image/Logo" component.
+     */
     public JRadioButton getImageFileBtn() {
         return imageFileBtn;
     }
-
+    /**
+     * Returns the {@code ButtonGroup} for managing the radio buttons for the data source of the "Image/Logo" component in the GUI.
+     *
+     * @return The {@code ButtonGroup} for managing the radio buttons for the data source of the "Image/Logo" component.
+     */
     public ButtonGroup getImageSource() {
         return imageSource;
     }
@@ -312,7 +381,11 @@ public class UpperCards {
     public JLabel getTableDataSourceLabel() {
         return tableDataSourceLabel;
     }
-
+    /**
+     * Returns the {@code JButton} for choosing the CSV file for the "Table" component in the GUI.
+     *
+     * @return The {@code JButton} for choosing the CSV file for the "Table" component.
+     */
     public JButton getTableFileChooser() {
         return tableFileChooser;
     }
@@ -324,24 +397,44 @@ public class UpperCards {
     public JTextField getTableDbField() {
         return tableDbField;
     }
-
+    /**
+     * Returns the {@code JRadioButton} for selecting the "CSV" data source for the "Table" component in the GUI.
+     *
+     * @return The {@code JRadioButton} for selecting the "CSV" data source for the "Table" component.
+     */
     public JRadioButton getTableCSVBtn() {
         return tableCSVBtn;
     }
-
+    /**
+     * Returns the {@code JRadioButton} for selecting the "Data Base" data source for the "Table" component in the GUI.
+     *
+     * @return The {@code JRadioButton} for selecting the "Data Base" data source for the "Table" component.
+     */
     public JRadioButton getTableDbBtn() {
         return tableDbBtn;
     }
-
+    /**
+     * Returns the {@code ButtonGroup} for managing the radio buttons for the data source of the "Table" component in the GUI.
+     *
+     * @return The {@code ButtonGroup} for managing the radio buttons for the data source of the "Table" component.
+     */
     public ButtonGroup getTableSource() {
         return tableSource;
     }
-
+    /**
+     * Returns the {@code JButton} for choosing the color for the "Table" component in the GUI.
+     *
+     * @return The {@code JButton} for choosing the color for the "Table" component.
+     */
     public JButton getTableColorBtn() {
         return tableColorBtn;
     }
-
-
+    /**
+     * Returns the panel representing the upper section of the GUI, including the title,
+     * component selection, and configuration options.
+     *
+     * @return The {@code JPanel} representing the upper section of the GUI.
+     */
     public JPanel getUpperPanel() {
         return upperPanel;
     }

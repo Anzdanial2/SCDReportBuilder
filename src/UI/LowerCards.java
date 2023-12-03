@@ -6,8 +6,16 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-//lowercards
 
+
+/**
+ * The LowerCards class represents a graphical user interface component for configuring
+ * and generating various types of charts, including Pie, Line, and Bar charts.
+ * It provides checkboxes, radio buttons, text fields, and buttons for user interaction.
+ *
+ * @version 1.0
+ * @author abdullah sami
+ */
 public class LowerCards {
     //Pie
     JCheckBox pieCheckBox;
@@ -80,6 +88,10 @@ public class LowerCards {
     Font mediumFont;
     Font componentFont;
     Font fieldFont;
+    /**
+     * Constructs a new LowerCards instance, initializing UI components and setting up
+     * the layout and appearance of the graphical elements.
+     */
     public LowerCards(){
         fieldFont = new Font("SansSerif", Font.PLAIN, 15);
         boldFont = new Font("SansSerif", Font.BOLD, 16);
@@ -330,6 +342,12 @@ public class LowerCards {
         barDbBtn.setBorder(new EmptyBorder(0, 0, 0, 0));
 
     }
+    /**
+     * Sets the background color for the specified container and its child components recursively.
+     *
+     * @param container The container whose background color needs to be set.
+     * @param color     The color to set as the background.
+     */
     private void setPanelBackground(Container container, Color color) {
         container.setBackground(color);
         for (Component component : container.getComponents()) {
@@ -343,17 +361,32 @@ public class LowerCards {
             }
         }
     }
+    /**
+     * Rounds the corners of the provided AbstractButton with the specified radius.
+     *
+     * @param button The AbstractButton (e.g., JButton) to have its corners rounded.
+     * @param radius The radius of the rounded corners.
+     */
     private static void roundButtonCorners(AbstractButton button, int radius) {
         button.setBorder(new LineBorder(button.getBackground(), radius, true));
         button.setContentAreaFilled(false);
         button.setOpaque(true);
     }
-
-
+    /**
+     * Retrieves the JPanel containing the lower section of the UI, which includes the
+     * configuration options for Pie, Line, and Bar charts, as well as the layout dropdown
+     * and the "Generate Report" button.
+     *
+     * @return A JPanel representing the lower section of the UI.
+     */
     public JPanel getLowerPanel() {
         return lowerPanel;
     }
-
+    /**
+     * Gets the checkbox for the Pie Chart configuration.
+     *
+     * @return The JCheckBox for the Pie Chart.
+     */
     public JCheckBox getPieCheckBox() {
         return pieCheckBox;
     }
@@ -361,19 +394,35 @@ public class LowerCards {
     public JLabel getPieSelectSourceLabel() {
         return pieSelectSourceLabel;
     }
-
+    /**
+     * Gets the CSV button for the Pie Chart.
+     *
+     * @return The JRadioButton for CSV data source.
+     */
     public JRadioButton getPieCSVBtn() {
         return pieCSVBtn;
     }
-
+    /**
+     * Gets the Database button for the Pie Chart.
+     *
+     * @return The JRadioButton for Database data source.
+     */
     public JRadioButton getPieDbBtn() {
         return pieDbBtn;
     }
-
+    /**
+     * Gets the ButtonGroup for the Pie Chart data source.
+     *
+     * @return The ButtonGroup for Pie Chart data source options.
+     */
     public ButtonGroup getPieSource() {
         return pieSource;
     }
-
+    /**
+     * Gets the file chooser button for the Pie Chart.
+     *
+     * @return The JButton for choosing CSV file for the Pie Chart.
+     */
     public JButton getPieFileChooser() {
         return pieFileChooser;
     }
@@ -381,15 +430,27 @@ public class LowerCards {
     public JLabel getPieLegendsLabel() {
         return pieLegendsLabel;
     }
-
+    /**
+     * Gets the checkbox for displaying legends in the Pie Chart.
+     *
+     * @return The JCheckBox for displaying legends.
+     */
     public JCheckBox getPieYesBox() {
         return pieYesBox;
     }
-
+    /**
+     * Gets the checkbox for not displaying legends in the Pie Chart.
+     *
+     * @return The JCheckBox for not displaying legends.
+     */
     public JCheckBox getPieNoBox() {
         return pieNoBox;
     }
-
+    /**
+     * Gets the checkbox for the Line Chart configuration.
+     *
+     * @return The JCheckBox for the Line Chart.
+     */
     public JCheckBox getLineCheckBox() {
         return lineCheckBox;
     }
@@ -397,19 +458,35 @@ public class LowerCards {
     public JLabel getLineSelectSourceLabel() {
         return lineSelectSourceLabel;
     }
-
+    /**
+     * Gets the CSV button for the Line Chart.
+     *
+     * @return The JRadioButton for CSV data source.
+     */
     public JRadioButton getLineCSVBtn() {
         return lineCSVBtn;
     }
-
+    /**
+     * Gets the Database button for the Line Chart.
+     *
+     * @return The JRadioButton for Database data source.
+     */
     public JRadioButton getLineDbBtn() {
         return lineDbBtn;
     }
-
+    /**
+     * Gets the ButtonGroup for the Line Chart data source.
+     *
+     * @return The ButtonGroup for Line Chart data source options.
+     */
     public ButtonGroup getLineSource() {
         return lineSource;
     }
-
+    /**
+     * Gets the file chooser button for the Line Chart.
+     *
+     * @return The JButton for choosing CSV file for the Line Chart.
+     */
     public JButton getLineFileChooser() {
         return lineFileChooser;
     }
@@ -417,7 +494,11 @@ public class LowerCards {
     public JLabel getLineXaxisLabel() {
         return lineXaxisLabel;
     }
-
+    /**
+     * Gets the text field for X-axis name in the Line Chart.
+     *
+     * @return The JTextField for X-axis name.
+     */
     public JTextField getLineXaxisField() {
         return lineXaxisField;
     }
@@ -425,7 +506,11 @@ public class LowerCards {
     public JLabel getLineYaxisLabel() {
         return lineYaxisLabel;
     }
-
+    /**
+     * Gets the label for displaying legends in the Line Chart.
+     *
+     * @return The JLabel for displaying legends.
+     */
     public JTextField getLineYaxisField() {
         return lineYaxisField;
     }
@@ -433,11 +518,19 @@ public class LowerCards {
     public JLabel getLineLegendsLabel() {
         return lineLegendsLabel;
     }
-
+    /**
+     * Gets the checkbox for displaying legends in the Line Chart.
+     *
+     * @return The JCheckBox for displaying legends.
+     */
     public JCheckBox getLineLegendsYesBox() {
         return lineLegendsYesBox;
     }
-
+    /**
+     * Gets the checkbox for not displaying legends in the Line Chart.
+     *
+     * @return The JCheckBox for not displaying legends.
+     */
     public JCheckBox getLineLegendsNoBox() {
         return lineLegendsNoBox;
     }
@@ -445,19 +538,35 @@ public class LowerCards {
     public JLabel getLineAxisValueLabel() {
         return lineAxisValueLabel;
     }
-
+    /**
+     * Gets the checkbox for displaying axis values in the Line Chart.
+     *
+     * @return The JCheckBox for displaying axis values.
+     */
     public JCheckBox getLineAxisYesBox() {
         return lineAxisYesBox;
     }
-
+    /**
+     * Gets the checkbox for not displaying axis values in the Line Chart.
+     *
+     * @return The JCheckBox for not displaying axis values.
+     */
     public JCheckBox getLineAxisNoBox() {
         return lineAxisNoBox;
     }
-
+    /**
+     * Gets the button for choosing color in the Line Chart.
+     *
+     * @return The JButton for choosing color in the Line Chart.
+     */
     public JButton getLineColorBtn() {
         return lineColorBtn;
     }
-
+    /**
+     * Gets the checkbox for the Bar Chart configuration.
+     *
+     * @return The JCheckBox for the Bar Chart.
+     */
     public JCheckBox getBarCheckBox() {
         return barCheckBox;
     }
@@ -465,15 +574,27 @@ public class LowerCards {
     public JLabel getBarSelectSourceLabel() {
         return barSelectSourceLabel;
     }
-
+    /**
+     * Gets the CSV button for the Bar Chart.
+     *
+     * @return The JRadioButton for CSV data source.
+     */
     public JRadioButton getBarCSVBtn() {
         return barCSVBtn;
     }
-
+    /**
+     * Gets the Database button for the Bar Chart.
+     *
+     * @return The JRadioButton for Database data source.
+     */
     public JRadioButton getBarDbBtn() {
         return barDbBtn;
     }
-
+    /**
+     * Gets the ButtonGroup for the Bar Chart data source.
+     *
+     * @return The ButtonGroup for Bar Chart data source options.
+     */
     public ButtonGroup getBarSource() {
         return barSource;
     }
@@ -481,7 +602,11 @@ public class LowerCards {
     public JLabel getBarXaxisLabel() {
         return barXaxisLabel;
     }
-
+    /**
+     * Gets the text field for X-axis name in the Bar Chart.
+     *
+     * @return The JTextField for X-axis name.
+     */
     public JTextField getBarXaxisField() {
         return barXaxisField;
     }
@@ -489,11 +614,19 @@ public class LowerCards {
     public JLabel getBarYaxisLabel() {
         return barYaxisLabel;
     }
-
+    /**
+     * Gets the text field for Y-axis name in the Bar Chart.
+     *
+     * @return The JTextField for Y-axis name.
+     */
     public JTextField getBarYaxisField() {
         return barYaxisField;
     }
-
+    /**
+     * Gets the button for choosing CSV file in the Bar Chart.
+     *
+     * @return The JButton for choosing CSV file in the Bar Chart.
+     */
     public JButton getBarFileChooser() {
         return barFileChooser;
     }
@@ -501,11 +634,19 @@ public class LowerCards {
     public JLabel getBarLegendsLabel() {
         return barLegendsLabel;
     }
-
+    /**
+     * Gets the checkbox for displaying legends in the Bar Chart.
+     *
+     * @return The JCheckBox for displaying legends.
+     */
     public JCheckBox getBarLegendsYesBox() {
         return barLegendsYesBox;
     }
-
+    /**
+     * Gets the checkbox for not displaying legends in the Bar Chart.
+     *
+     * @return The JCheckBox for not displaying legends.
+     */
     public JCheckBox getBarLegendsNoBox() {
         return barLegendsNoBox;
     }
@@ -513,19 +654,35 @@ public class LowerCards {
     public JLabel getBarAxisValueLabel() {
         return barAxisValueLabel;
     }
-
+    /**
+     * Gets the checkbox for displaying axis values in the Bar Chart.
+     *
+     * @return The JCheckBox for displaying axis values.
+     */
     public JCheckBox getBarAxisYesBox() {
         return barAxisYesBox;
     }
-
+    /**
+     * Gets the checkbox for not displaying axis values in the Bar Chart.
+     *
+     * @return The JCheckBox for not displaying axis values.
+     */
     public JCheckBox getBarAxisNoBox() {
         return barAxisNoBox;
     }
-
+    /**
+     * Gets the button for choosing color in the Bar Chart.
+     *
+     * @return The JButton for choosing color in the Bar Chart.
+     */
     public JButton getBarColorBtn() {
         return barColorBtn;
     }
-
+    /**
+     * Gets the button for generating the report based on the selected configurations.
+     *
+     * @return The JButton for generating the report.
+     */
     public JButton getGenerateReportBtn() {
         return generateReportBtn;
     }
