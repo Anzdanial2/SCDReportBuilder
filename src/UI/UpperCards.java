@@ -3,8 +3,9 @@ package UI;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
-
+//Upper Cards here
 public class UpperCards {
+    ReportUI reportUI;
     JLabel titleLabel;
     JTextField titleField;
     JLabel selectComponentsLabel;
@@ -50,46 +51,95 @@ public class UpperCards {
     JPanel tablePanel5;
     JPanel imagePanel1;
     JPanel imagePanel2;
+    Font boldFont;
+    Font mediumFont;
+    Font titleFont;
+    Font fieldFont;
+    Font titleFieldFont;
+    Font componentFont;
     JPanel imagePanel3;
     public UpperCards(){
+        fieldFont = new Font("SansSerif", Font.PLAIN, 15);
+        titleFieldFont = new Font("SansSerif", Font.BOLD, 20);
+        boldFont = new Font("SansSerif", Font.BOLD, 16);
+        componentFont = new Font("SansSerif", Font.BOLD, 20);
+        mediumFont = new Font("SansSerif", Font.TRUETYPE_FONT, 15);
+        titleFont = new Font("SansSerif", Font.BOLD, 25);
         titleLabel = new JLabel("Title");
+        titleLabel.setFont(titleFont);
         titleField = new JTextField(30);
+        titleField.setFont(titleFieldFont);
+        titleField.setPreferredSize(new Dimension(titleField.getPreferredSize().width, 35));
         selectComponentsLabel = new JLabel("Select Components");
+        selectComponentsLabel.setFont(titleFont);
 
         //Text
         textCheckBox = new JCheckBox("Text");
+        textCheckBox.setFocusable(false);
+        textCheckBox.setFont(componentFont);
         textDataSourceLabel  = new JLabel("Select Data Source");
+        textDataSourceLabel.setFont(boldFont);
         textTxtBtn = new JRadioButton("txt file");
+        textTxtBtn.setFocusable(false);
+        textTxtBtn.setFont(mediumFont);
         textDbBtn = new JRadioButton("Data Base");
+        textDbBtn.setFocusable(false);
+        textDbBtn.setFont(mediumFont);
         textSource = new ButtonGroup();
         textSource.add(textTxtBtn);
         textSource.add(textDbBtn);
         textFileChooserBtn = new JButton("Choose File");
+        textFileChooserBtn.setFocusable(false);
+        textFileChooserBtn.setBackground(new Color(179, 208, 255));
+        textFileChooserBtn.setFont(boldFont);
         textDbLabel = new JLabel("DataBase Name:");
         textDbField = new JTextField(10);
 
         //Image
         imageCheckBox = new JCheckBox("Image/Logo");
+        imageCheckBox.setFocusable(false);
+        imageCheckBox.setFont(componentFont);
         imageFileChooserBtn = new JButton("Choose Image");
+        imageFileChooserBtn.setFocusable(false);
+        imageFileChooserBtn.setBackground(new Color(179, 208, 255));
+        imageFileChooserBtn.setFont(boldFont);
         imageSourceLabel = new JLabel("Select Data Source");
+        imageSourceLabel.setFont(boldFont);
         imageFileBtn = new JRadioButton("png");
+        imageFileBtn.setFocusable(false);
+        imageFileBtn.setFont(mediumFont);
         imageDbBtn = new JRadioButton("Data Base");
+        imageDbBtn.setFocusable(false);
+        imageDbBtn.setFont(mediumFont);
         imageSource = new ButtonGroup();
         imageSource.add(imageFileBtn);
         imageSource.add(imageDbBtn);
 
         //Table
         tableDataSourceLabel  = new JLabel("Select Data Source");
+        tableDataSourceLabel.setFont(boldFont);
         tableCheckBox = new JCheckBox("Table");
+        tableCheckBox.setFocusable(false);
+        tableCheckBox.setFont(componentFont);
         tableCSVBtn = new JRadioButton("CSV");
+        tableCSVBtn.setFocusable(false);
+        tableCSVBtn.setFont(mediumFont);
         tableDbBtn = new JRadioButton("Data Base");
+        tableDbBtn.setFocusable(false);
+        tableDbBtn.setFont(mediumFont);
         tableSource = new ButtonGroup();
         tableSource.add(tableCSVBtn);
         tableSource.add(tableDbBtn);
         tableFileChooser = new JButton("Choose CSV");
+        tableFileChooser.setFocusable(false);
+        tableFileChooser.setBackground(new Color(179, 208, 255));
+        tableFileChooser.setFont(boldFont);
         tableDbLabel = new JLabel("DB name");
         tableDbField = new JTextField(10);
         tableColorBtn = new JButton("Choose Color");
+        tableColorBtn.setFocusable(false);
+        tableColorBtn.setBackground(new Color(179, 208, 255));
+        tableColorBtn.setFont(boldFont);
 
         //text Layout
         textPanel2 = new JPanel(new GridLayout(2,1,5,7));
@@ -103,6 +153,8 @@ public class UpperCards {
         textPanel.setLayout(new BoxLayout(textPanel,BoxLayout.Y_AXIS));
         textPanel.add(textPanel2);
         textPanel.add(textPanel3);
+        textPanel.setBackground(new Color(83, 140, 198));
+        setPanelBackground(textPanel, new Color(83, 140, 198));
 
         tablePanel2 = new JPanel(new GridLayout(2,1,5,7));
         tablePanel2.add(tableCheckBox);
@@ -118,8 +170,8 @@ public class UpperCards {
         tabelPanel.setLayout(new BoxLayout(tabelPanel,BoxLayout.Y_AXIS));
         tabelPanel.add(tablePanel2);
         tabelPanel.add(tablePanel3);
-        tabelPanel.setBackground(new Color(179, 255, 249)); // light blue
-        setPanelBackground(tabelPanel, new Color(179, 255, 249));
+        tabelPanel.setBackground(new Color(83, 140, 198));
+        setPanelBackground(tabelPanel, new Color(83, 140, 198));
 
         //Image Layout
         imagePanel1 = new JPanel(new GridLayout(2,1,5,7));
@@ -135,8 +187,8 @@ public class UpperCards {
         imagePanel.setLayout(new BoxLayout(imagePanel,BoxLayout.Y_AXIS));
         imagePanel.add(imagePanel1);
         imagePanel.add(imagePanel2);
-        imagePanel.setBackground(new Color(179, 208, 255)); // light blue
-        setPanelBackground(imagePanel, new Color(179, 208, 255));
+        imagePanel.setBackground(new Color(83, 140, 198)); // light blue
+        setPanelBackground(imagePanel, new Color(83, 140, 198));
 
         //Composing Layouts
         upperPanel1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -144,7 +196,7 @@ public class UpperCards {
         upperPanel1.add(titleField);
 
         // Create a rounded border
-        Border roundedBorder1 = new LineBorder(new Color(179, 208, 255), 2, true);
+        Border roundedBorder1 = new LineBorder(new Color(83, 140, 198), 2, true);
         Border roundedBorder2 = new LineBorder(Color.BLACK, 2, true);
         Border roundedBorder3 = new LineBorder(Color.BLACK, 2, true);
 
@@ -179,7 +231,12 @@ public class UpperCards {
             }
         }
     }
-
+    private void createReportUI(){
+        if(reportUI==null){
+            reportUI = new ReportUI();
+        }
+        reportUI.showFrame();
+    }
     public JLabel getTitleLabel() {
         return titleLabel;
     }
@@ -288,18 +345,16 @@ public class UpperCards {
     public JPanel getUpperPanel() {
         return upperPanel;
     }
-
     public static void main(String[] args) {
         JFrame frame = new JFrame("Report Builder");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1000,900);
+        frame.setSize(1100,850);
         UpperCards uc = new UpperCards();
         LowerCards lc = new LowerCards();
-//        uc.getUpperPanel2().add(lc.getPiePanel());
         frame.setLayout(new BorderLayout());
         frame.add(uc.getUpperPanel(),BorderLayout.NORTH);
         frame.add(lc.getLowerPanel(),BorderLayout.CENTER);
-
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 }

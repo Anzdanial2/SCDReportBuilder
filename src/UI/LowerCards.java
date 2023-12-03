@@ -3,8 +3,10 @@ package UI;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+//lowercards
 
 public class LowerCards {
     //Pie
@@ -18,6 +20,7 @@ public class LowerCards {
     JLabel pieLegendsLabel;
     JCheckBox pieYesBox;
     JCheckBox pieNoBox;
+    JButton pieColorChooser;
     //Line
     JCheckBox lineCheckBox;
     JLabel lineSelectSourceLabel;
@@ -56,6 +59,7 @@ public class LowerCards {
     JCheckBox barAxisNoBox;
     JButton barColorBtn;
     JButton generateReportBtn;
+    JComboBox<String> layoutDropDown;
     //Panels
     JPanel piePanel;
     JPanel barPanel;
@@ -72,62 +76,154 @@ public class LowerCards {
     JPanel barPanel3;
     JPanel barPanel4;
     JPanel lowerPanel;
+    Font boldFont;
+    Font mediumFont;
+    Font componentFont;
+    Font fieldFont;
     public LowerCards(){
+        fieldFont = new Font("SansSerif", Font.PLAIN, 15);
+        boldFont = new Font("SansSerif", Font.BOLD, 16);
+        mediumFont = new Font("SansSerif", Font.TRUETYPE_FONT, 15);
+        componentFont = new Font("SansSerif", Font.BOLD, 20);
         pieCheckBox = new JCheckBox("Pie Chart");
+        pieCheckBox.setFocusable(false);
+        pieCheckBox.setFont(componentFont);
+        pieCheckBox.setFont(boldFont);
         pieSelectSourceLabel = new JLabel("Select Data Source");
+        pieSelectSourceLabel.setFont(boldFont);
         pieCSVBtn = new JRadioButton("CSV");
+        pieCSVBtn.setFocusable(false);
+        pieCSVBtn.setFont(mediumFont);
         pieDbBtn = new JRadioButton("Data Base");
+        pieDbBtn.setFocusable(false);
+        pieDbBtn.setFont(mediumFont);
         pieSource = new ButtonGroup();
         pieSource.add(pieCSVBtn);
         pieSource.add(pieDbBtn);
         pieFileChooser = new JButton("Choose CSV");
+        pieFileChooser.setFocusable(false);
+        pieFileChooser.setBackground(new Color(179, 208, 255));
+        pieFileChooser.setFont(boldFont);
+//        roundButtonCorners(pieFileChooser, 15);
         pieLegendsLabel = new JLabel("Display Legends");
+        pieLegendsLabel.setFont(boldFont);
         pieYesBox = new JCheckBox("Yes");
+        pieYesBox.setFocusable(false);
+        pieYesBox.setFont(mediumFont);
         pieNoBox = new JCheckBox("No");
+        pieNoBox.setFocusable(false);
+        pieNoBox.setFont(mediumFont);
+        pieColorChooser = new JButton("Choose Color");
+        pieColorChooser.setFocusable(false);
+        pieColorChooser.setFont(boldFont);
+        pieColorChooser.setBackground(new Color(179, 208, 255));
 
         //Line
         lineCheckBox = new JCheckBox("Line Chart");
+        lineCheckBox.setFocusable(false);
+        lineCheckBox.setFont(componentFont);
         lineSelectSourceLabel = new JLabel("Select Data Source");
+        lineSelectSourceLabel.setFont(boldFont);
         lineCSVBtn = new JRadioButton("CSV");
+        lineCSVBtn.setFocusable(false);
+        lineCSVBtn.setFont(mediumFont);
         lineDbBtn = new JRadioButton("Data Base");
+        lineDbBtn.setFocusable(false);
+        lineDbBtn.setFont(mediumFont);
         lineSource = new ButtonGroup();
         lineSource.add(lineCSVBtn);
         lineSource.add(lineDbBtn);
         lineFileChooser = new JButton("Choose CSV");
+        lineFileChooser.setFocusable(false);
+        lineFileChooser.setBackground(new Color(179, 208, 255));
+        lineFileChooser.setFont(boldFont);
         lineXaxisLabel = new JLabel("X-axis Name");
+        lineXaxisLabel.setFont(boldFont);
         lineYaxisLabel = new JLabel("Y-axis Name");
+        lineYaxisLabel.setFont(boldFont);
         lineXaxisField = new JTextField(10);
+        lineXaxisField.setFont(fieldFont);
         lineYaxisField = new JTextField(10);
+        lineYaxisField.setFont(fieldFont);
         lineLegendsLabel = new JLabel("Display Legends");
+        lineLegendsLabel.setFont(boldFont);
         lineLegendsYesBox = new JCheckBox("Yes");
+        lineLegendsYesBox.setFocusable(false);
+        lineLegendsYesBox.setFont(mediumFont);
         lineLegendsNoBox = new JCheckBox("No");
+        lineLegendsNoBox.setFocusable(false);
+        lineLegendsNoBox.setFont(mediumFont);
         lineAxisValueLabel = new JLabel("Display Axis Values");
+        lineAxisValueLabel.setFont(boldFont);
         lineAxisYesBox = new JCheckBox("Yes");
+        lineAxisYesBox.setFocusable(false);
+        lineAxisYesBox.setFont(mediumFont);
         lineAxisNoBox = new JCheckBox("No");
+        lineAxisNoBox.setFocusable(false);
+        lineAxisNoBox.setFont(mediumFont);
         lineColorBtn = new JButton("Choose Color");
+        lineColorBtn.setFocusable(false);
+        lineColorBtn.setBackground(new Color(179, 208, 255));
+        lineColorBtn.setFont(boldFont);
 
         //Bar
         barCheckBox = new JCheckBox("Bar Chart");
+        barCheckBox.setFocusable(false);
+        barCheckBox.setFont(componentFont);
         barSelectSourceLabel = new JLabel("Select Data Source");
+        barSelectSourceLabel.setFont(boldFont);
         barCSVBtn = new JRadioButton("CSV");
+        barCSVBtn.setFocusable(false);
+        barCSVBtn.setFont(mediumFont);
         barDbBtn = new JRadioButton("Data Base");
+        barDbBtn.setFocusable(false);
+        barDbBtn.setFont(mediumFont);
+
         barSource = new ButtonGroup();
         barSource.add(lineCSVBtn);
         barSource.add(lineDbBtn);
         barXaxisLabel = new JLabel("X-axis Name");
+        barXaxisLabel.setFont(boldFont);
         barYaxisLabel = new JLabel("Y-axis Name");
+        barYaxisLabel.setFont(boldFont);
         barXaxisField = new JTextField(10);
+        barXaxisField.setFont(fieldFont);
         barYaxisField = new JTextField(10);
+        barYaxisField.setFont(fieldFont);
         barFileChooser = new JButton("Choose CSV");
+        barFileChooser.setFocusable(false);
+        barFileChooser.setBackground(new Color(179, 208, 255));
+//        barFileChooser.setForeground(new Color(51, 133, 255));
+        barFileChooser.setFont(boldFont);
         barLegendsLabel = new JLabel("Display Legends");
+        barLegendsLabel.setFont(boldFont);
         barLegendsYesBox = new JCheckBox("Yes");
+        barLegendsYesBox.setFocusable(false);
+        barLegendsYesBox.setFont(mediumFont);
         barLegendsNoBox = new JCheckBox("No");
+        barLegendsNoBox.setFocusable(false);
+        barLegendsNoBox.setFont(mediumFont);
         barAxisValueLabel = new JLabel("Display Axis Values");
+        barAxisValueLabel.setFont(boldFont);
         barAxisYesBox = new JCheckBox("Yes");
+        barAxisYesBox.setFocusable(false);
+        barAxisYesBox.setFont(mediumFont);
         barAxisNoBox = new JCheckBox("No");
+        barAxisNoBox.setFocusable(false);
+        barAxisNoBox.setFont(mediumFont);
         barColorBtn = new JButton("Choose Color");
+        barColorBtn.setFocusable(false);
+        barColorBtn.setFont(boldFont);
+        barColorBtn.setBackground(new Color(179, 208, 255));
         generateReportBtn = new JButton("Generate Report");
-        generateReportBtn.setPreferredSize(new Dimension(150,50));
+        String[] layoutOptions = {"Default layout","Image,Text,Table,Chart",
+                "Text,Image,Table,Chart","Image,Chart,Table,Text","Table,Text,Image,Chart"};
+        layoutDropDown = new JComboBox<>(layoutOptions);
+        layoutDropDown.setFont(boldFont);
+        generateReportBtn.setFocusable(false);
+        generateReportBtn.setFont(componentFont);
+        generateReportBtn.setBackground(new Color(77, 255, 136));
+        generateReportBtn.setPreferredSize(new Dimension(200,50));
 
         piePanel1 = new JPanel(new GridLayout(2,1,5,7));
         piePanel1.add(pieCheckBox);
@@ -141,6 +237,7 @@ public class LowerCards {
         piePanel3.add(pieLegendsLabel);
         piePanel3.add(pieYesBox);
         piePanel3.add(pieNoBox);
+        piePanel3.add(pieColorChooser);
 
         piePanel = new JPanel();
         piePanel.setLayout(new BoxLayout(piePanel,BoxLayout.Y_AXIS));
@@ -206,13 +303,13 @@ public class LowerCards {
         barPanel.add(barPanel3);
         barPanel.add(barPanel4);
         //background color
-        piePanel.setBackground(new Color(179, 208, 255)); // light blue
-        setPanelBackground(piePanel, new Color(179, 208, 255));
-        linePanel.setBackground(new Color(179, 208, 255));
-        setPanelBackground(linePanel, new Color(179, 208, 255));
-        barPanel.setBackground(new Color(179, 208, 255)); // light blue
-        setPanelBackground(barPanel, new Color(179, 208, 255));
-        Border roundedBorder = new LineBorder(new Color(179, 208, 255), 2, true);
+        piePanel.setBackground(new Color(83, 140, 198)); // light blue
+        setPanelBackground(piePanel, new Color(83, 140, 198));
+        linePanel.setBackground(new Color(83, 140, 198));
+        setPanelBackground(linePanel, new Color(83, 140, 198));
+        barPanel.setBackground(new Color(83, 140, 198)); // light blue
+        setPanelBackground(barPanel, new Color(83, 140, 198));
+        Border roundedBorder = new LineBorder(new Color(83, 140, 198), 2, true);
         piePanel.setBorder(new CompoundBorder(roundedBorder, BorderFactory.createEmptyBorder(10, 10, 10, 10)));
         linePanel.setBorder(new CompoundBorder(roundedBorder, BorderFactory.createEmptyBorder(10, 10, 10, 10)));
         barPanel.setBorder(new CompoundBorder(roundedBorder, BorderFactory.createEmptyBorder(10, 10, 10, 10)));
@@ -220,7 +317,17 @@ public class LowerCards {
         lowerPanel.add(linePanel);
         lowerPanel.add(barPanel);
         lowerPanel.add(piePanel);
+        lowerPanel.add(layoutDropDown);
         lowerPanel.add(generateReportBtn);
+
+
+        // Added the following code to set the border to EmptyBorder
+        pieCSVBtn.setBorder(new EmptyBorder(0, 0, 0, 0));
+        pieDbBtn.setBorder(new EmptyBorder(0, 0, 0, 0));
+        lineCSVBtn.setBorder(new EmptyBorder(0, 0, 0, 0));
+        lineDbBtn.setBorder(new EmptyBorder(0, 0, 0, 0));
+        barCSVBtn.setBorder(new EmptyBorder(0, 0, 0, 0));
+        barDbBtn.setBorder(new EmptyBorder(0, 0, 0, 0));
 
     }
     private void setPanelBackground(Container container, Color color) {
@@ -235,6 +342,11 @@ public class LowerCards {
                 }
             }
         }
+    }
+    private static void roundButtonCorners(AbstractButton button, int radius) {
+        button.setBorder(new LineBorder(button.getBackground(), radius, true));
+        button.setContentAreaFilled(false);
+        button.setOpaque(true);
     }
 
 
