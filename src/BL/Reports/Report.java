@@ -25,5 +25,7 @@ public class Report {
 
 	}
 	public void export(){
+//		exporter = new PDFExporter();
+
 	}
 }

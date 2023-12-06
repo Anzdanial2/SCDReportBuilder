@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class Bar extends Chart {
 
-	private static final int AXIS_MARGIN = 50;
+	private static final int AXIS_MARGIN = 70;
 	private static final int BAR_WIDTH = 30;
 
 	private Map<String, Integer> data;
@@ -55,6 +55,31 @@ public class Bar extends Chart {
 
 		// Draw bars
 		drawBars(g);
+		drawLabels(g);
+	}
+
+	private void drawLabels(Graphics g) {
+		g.setFont(new Font("Arial", Font.PLAIN, 12));
+		g.setColor(Color.BLACK);
+
+		if (legends != null) {
+			if (legends.length > 0) {
+				// Draw the X-axis legend horizontally
+				g.drawString(legends[0], getWidth() / 2 - 50, getHeight() - 20); // Adjusted position for X-axis label
+			}
+			if (legends.length > 1) {
+				// Draw the Y-axis legend vertically
+				drawVerticalString(g, legends[1], 15, getHeight() / 2);
+			}
+		}
+	}
+
+	private void drawVerticalString(Graphics g, String text, int x, int y) {
+		Graphics2D g2d = (Graphics2D) g.create();
+		g2d.translate(x, y);
+		g2d.rotate(-Math.PI / 2);
+		g2d.drawString(text, 0, 0);
+		g2d.dispose();
 	}
 
 	private void drawYAxis(Graphics g) {
