@@ -177,7 +177,7 @@ public class Canvas implements GenerateReportCallback{
                 report.add(tableComp);
             }
         } else if (uc.getTableCompSelected() && lc.isBarChartSelected()) {
-            if (lc.isBarChartSelected()) {
+            if (lc.isBarCSVSelected()) {
                 tableComp = new Table(new CSV(lc.getBarCSVPath()));
                 report.add(tableComp);
             } else if (lc.isBarDBSelected()) {
@@ -390,8 +390,8 @@ public class Canvas implements GenerateReportCallback{
 
         // Now check for the selected chart type
         boolean dataSourceSelected = false;
-        boolean displayLegends = false;
-        boolean displayAxisValues = false;
+        Boolean displayLegends = null;
+        Boolean displayAxisValues = null;
 
         if (lc.isLineChartSelected()) {
             dataSourceSelected = lc.isLineCSVSelected() || lc.isLineDBSelected();
@@ -413,13 +413,13 @@ public class Canvas implements GenerateReportCallback{
         }
 
         // Check if display legends is selected for the chosen chart type
-        if (!displayLegends) {
+        if (displayLegends == null) {
             JOptionPane.showMessageDialog(null, "Please select if you want to display legends for the chosen Chart.");
             return;
         }
 
         // Check if display axis values is selected for the chosen chart type
-        if (!displayAxisValues && lc.isLineChartSelected() || !displayAxisValues && lc.isBarChartSelected()) {
+        if ((lc.isLineChartSelected() || lc.isBarChartSelected()) && displayAxisValues == null) {
             JOptionPane.showMessageDialog(null, "Please select if you want to display axis values for the chosen Chart.");
             return;
         }
@@ -429,11 +429,12 @@ public class Canvas implements GenerateReportCallback{
     }
 
 
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             Canvas canvas = new Canvas();
-//            canvas.welcomePage();
-            canvas.selectComponents();
+            canvas.welcomePage();
+//            canvas.selectComponents();
 //            canvas.generateReport();
         });
     }

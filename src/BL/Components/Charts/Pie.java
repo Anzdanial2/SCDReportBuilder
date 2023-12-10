@@ -15,6 +15,7 @@ public class Pie extends Chart {
 
 	public Pie(DataSource dataSource, boolean displayLegends) {
 		super(dataSource);
+		this.displayLegends = displayLegends;
 	}
 	public void setDisplayLegends(boolean displayLegends){
 		this.displayLegends = displayLegends;

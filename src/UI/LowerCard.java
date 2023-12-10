@@ -18,8 +18,7 @@ public class LowerCard {
     ButtonGroup pieSource;
     JButton pieFileChooser;
     JLabel pieLegendsLabel;
-    JCheckBox pieYesBox;
-    JCheckBox pieNoBox;
+    JCheckBox pieLegendsBox;
     JButton pieColorChooser;
     //Line
     JCheckBox lineCheckBox;
@@ -34,11 +33,9 @@ public class LowerCard {
     JLabel lineYaxisLabel;
     JTextField lineYaxisField;
     JLabel lineLegendsLabel;
-    JCheckBox lineLegendsYesBox;
-    JCheckBox lineLegendsNoBox;
+    JCheckBox lineLegendsBox;
     JLabel lineAxisValueLabel;
-    JCheckBox lineAxisYesBox;
-    JCheckBox lineAxisNoBox;
+    JCheckBox lineAxisBox;
     JButton lineColorBtn;
     //Bar
     JCheckBox barCheckBox;
@@ -52,11 +49,9 @@ public class LowerCard {
     JTextField barYaxisField;
     JButton barFileChooser;
     JLabel barLegendsLabel;
-    JCheckBox barLegendsYesBox;
-    JCheckBox barLegendsNoBox;
+    JCheckBox barLegendsBox;
     JLabel barAxisValueLabel;
-    JCheckBox barAxisYesBox;
-    JCheckBox barAxisNoBox;
+    JCheckBox barAxisBox;
     JButton barColorBtn;
     JButton generateReportBtn;
     JComboBox<String> layoutDropDown;
@@ -133,8 +128,7 @@ public class LowerCard {
         piePanel2.add(pieFileChooser);
         piePanel3 = new JPanel(new FlowLayout(FlowLayout.LEFT,5,7));
         piePanel3.add(pieLegendsLabel);
-        piePanel3.add(pieYesBox);
-        piePanel3.add(pieNoBox);
+        piePanel3.add(pieLegendsBox);
 //        piePanel3.add(pieColorChooser);
 
         piePanel = new JPanel();
@@ -159,11 +153,9 @@ public class LowerCard {
 
         linePanel4 = new JPanel(new GridLayout(2,3,5,7));
         linePanel4.add(lineLegendsLabel);
-        linePanel4.add(lineLegendsYesBox);
-        linePanel4.add(lineLegendsNoBox);
+        linePanel4.add(lineLegendsBox);
         linePanel4.add(lineAxisValueLabel);
-        linePanel4.add(lineAxisYesBox);
-        linePanel4.add(lineAxisNoBox);
+        linePanel4.add(lineAxisBox);
 //        linePanel4.add(lineColorBtn);
         linePanel = new JPanel();
         linePanel.setLayout(new BoxLayout(linePanel,BoxLayout.Y_AXIS));
@@ -188,11 +180,9 @@ public class LowerCard {
 
         barPanel4 = new JPanel(new GridLayout(2,3,5,7));
         barPanel4.add(barLegendsLabel);
-        barPanel4.add(barLegendsYesBox);
-        barPanel4.add(barLegendsNoBox);
+        barPanel4.add(barLegendsBox);
         barPanel4.add(barAxisValueLabel);
-        barPanel4.add(barAxisYesBox);
-        barPanel4.add(barAxisNoBox);
+        barPanel4.add(barAxisBox);
 //        barPanel4.add(barColorBtn);
         barPanel = new JPanel();
         barPanel.setLayout(new BoxLayout(barPanel,BoxLayout.Y_AXIS));
@@ -275,12 +265,9 @@ public class LowerCard {
 //        roundButtonCorners(pieFileChooser, 15);
         pieLegendsLabel = new JLabel("Display Legends");
         pieLegendsLabel.setFont(boldFont);
-        pieYesBox = new JCheckBox("Yes");
-        pieYesBox.setFocusable(false);
-        pieYesBox.setFont(mediumFont);
-        pieNoBox = new JCheckBox("No");
-        pieNoBox.setFocusable(false);
-        pieNoBox.setFont(mediumFont);
+        pieLegendsBox = new JCheckBox("Yes/No");
+        pieLegendsBox.setFocusable(false);
+        pieLegendsBox.setFont(mediumFont);
 
         pieCheckBox.addActionListener(new ActionListener() {
             @Override
@@ -328,23 +315,10 @@ public class LowerCard {
             }
         });
 
-        pieYesBox.addActionListener(new ActionListener() {
+        pieLegendsBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(pieChartSelected){
-                    pieLegendsSelected = pieYesBox.isSelected();
-                    pieNoBox.setSelected(!pieYesBox.isSelected()); // Unselect the "No" box when "Yes" is selected
-                }
-            }
-        });
-
-        pieNoBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(pieChartSelected){
-                    pieLegendsSelected = !pieNoBox.isSelected(); // If "No" is selected, pieLegendsSelected should be false
-                    pieYesBox.setSelected(!pieNoBox.isSelected()); // Unselect the "Yes" box when "No" is selected
-                }
+                pieLegendsSelected = pieLegendsBox.isSelected();
             }
         });
 
@@ -434,53 +408,30 @@ public class LowerCard {
 //        lineYaxisField.setFont(fieldFont);
         lineLegendsLabel = new JLabel("Display Legends");
         lineLegendsLabel.setFont(boldFont);
-        lineLegendsYesBox = new JCheckBox("Yes");
-        lineLegendsYesBox.setFocusable(false);
-        lineLegendsYesBox.setFont(mediumFont);
-        lineLegendsNoBox = new JCheckBox("No");
-        lineLegendsNoBox.setFocusable(false);
-        lineLegendsNoBox.setFont(mediumFont);
+        lineLegendsBox = new JCheckBox("Yes/No");
+        lineLegendsBox.setFocusable(false);
+        lineLegendsBox.setFont(mediumFont);
 
         lineAxisValueLabel = new JLabel("Display Axis Values");
         lineAxisValueLabel.setFont(boldFont);
-        lineAxisYesBox = new JCheckBox("Yes");
-        lineAxisYesBox.setFocusable(false);
-        lineAxisYesBox.setFont(mediumFont);
-        lineAxisNoBox = new JCheckBox("No");
-        lineAxisNoBox.setFocusable(false);
-        lineAxisNoBox.setFont(mediumFont);
+        lineAxisBox = new JCheckBox("Yes/No");
+        lineAxisBox.setFocusable(false);
+        lineAxisBox.setFont(mediumFont);
 
-        lineLegendsYesBox.addActionListener(new ActionListener() {
+        lineLegendsBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Set the legends selected based on the state of the Yes checkbox
-                lineLegendsSelected = lineLegendsYesBox.isSelected();
+                lineLegendsSelected = lineLegendsBox.isSelected();
             }
         });
 
-        lineLegendsNoBox.addActionListener(new ActionListener() {
+        lineAxisBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // If No is selected, legends should not be selected
-                lineLegendsSelected = !lineLegendsNoBox.isSelected();
+                lineAxisValuesSelected = lineAxisBox.isSelected();
             }
         });
 
-        lineAxisYesBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Set the axis values selected based on the state of the Yes checkbox
-                lineAxisValuesSelected = lineAxisYesBox.isSelected();
-            }
-        });
-
-        lineAxisNoBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // If No is selected, axis values should not be selected
-                lineAxisValuesSelected = !lineAxisNoBox.isSelected();
-            }
-        });
 
 //        lineColorBtn = new JButton("Choose Color");
 //        lineColorBtn.setFocusable(false);
@@ -571,63 +522,29 @@ public class LowerCard {
         barFileChooser.setFont(boldFont);
         barLegendsLabel = new JLabel("Display Legends");
         barLegendsLabel.setFont(boldFont);
-        barLegendsYesBox = new JCheckBox("Yes");
-        barLegendsYesBox.setFocusable(false);
-        barLegendsYesBox.setFont(mediumFont);
-        barLegendsNoBox = new JCheckBox("No");
-        barLegendsNoBox.setFocusable(false);
-        barLegendsNoBox.setFont(mediumFont);
+        barLegendsBox = new JCheckBox("Yes/No");
+        barLegendsBox.setFocusable(false);
+        barLegendsBox.setFont(mediumFont);
         barAxisValueLabel = new JLabel("Display Axis Values");
         barAxisValueLabel.setFont(boldFont);
-        barAxisYesBox = new JCheckBox("Yes");
-        barAxisYesBox.setFocusable(false);
-        barAxisYesBox.setFont(mediumFont);
-        barAxisNoBox = new JCheckBox("No");
-        barAxisNoBox.setFocusable(false);
-        barAxisNoBox.setFont(mediumFont);
-        ButtonGroup barAxisGroup = new ButtonGroup();
-        barAxisGroup.add(barAxisYesBox);
-        barAxisGroup.add(barAxisNoBox);
+        barAxisBox = new JCheckBox("Yes/No");
+        barAxisBox.setFocusable(false);
+        barAxisBox.setFont(mediumFont);
 
-        ButtonGroup barLegendsGroup = new ButtonGroup();
-        barLegendsGroup.add(barLegendsYesBox);
-        barLegendsGroup.add(barLegendsNoBox);
-
-        barAxisYesBox.addActionListener(new ActionListener() {
+        barLegendsBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (barChartSelected) {
-                    barAxisValuesSelected = barAxisYesBox.isSelected();
-                }
+                barLegendsSelected = barLegendsBox.isSelected();
             }
         });
 
-        barAxisNoBox.addActionListener(new ActionListener() {
+        barAxisBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (barChartSelected) {
-                    barAxisValuesSelected = !barAxisNoBox.isSelected();
-                }
+                barAxisValuesSelected = barAxisBox.isSelected();
             }
         });
 
-        barLegendsYesBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (barChartSelected) {
-                    barLegendsSelected = barLegendsYesBox.isSelected();
-                }
-            }
-        });
-
-        barLegendsNoBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (barChartSelected) {
-                    barLegendsSelected = !barLegendsNoBox.isSelected();
-                }
-            }
-        });
 
 //        barColorBtn = new JButton("Choose Color");
 //        barColorBtn.setFocusable(false);
@@ -756,13 +673,10 @@ public class LowerCard {
         return pieLegendsLabel;
     }
 
-    public JCheckBox getPieYesBox() {
-        return pieYesBox;
+    public JCheckBox getPieLegendsBox() {
+        return pieLegendsBox;
     }
 
-    public JCheckBox getPieNoBox() {
-        return pieNoBox;
-    }
 
     public JCheckBox getLineCheckBox() {
         return lineCheckBox;
@@ -808,24 +722,16 @@ public class LowerCard {
         return lineLegendsLabel;
     }
 
-    public JCheckBox getLineLegendsYesBox() {
-        return lineLegendsYesBox;
-    }
-
-    public JCheckBox getLineLegendsNoBox() {
-        return lineLegendsNoBox;
+    public JCheckBox getLineLegendsBox() {
+        return lineLegendsBox;
     }
 
     public JLabel getLineAxisValueLabel() {
         return lineAxisValueLabel;
     }
 
-    public JCheckBox getLineAxisYesBox() {
-        return lineAxisYesBox;
-    }
-
-    public JCheckBox getLineAxisNoBox() {
-        return lineAxisNoBox;
+    public JCheckBox getLineAxisBox() {
+        return lineAxisBox;
     }
 
     public JButton getLineColorBtn() {
@@ -876,24 +782,16 @@ public class LowerCard {
         return barLegendsLabel;
     }
 
-    public JCheckBox getBarLegendsYesBox() {
-        return barLegendsYesBox;
-    }
-
-    public JCheckBox getBarLegendsNoBox() {
-        return barLegendsNoBox;
+    public JCheckBox getBarLegendsBox() {
+        return barLegendsBox;
     }
 
     public JLabel getBarAxisValueLabel() {
         return barAxisValueLabel;
     }
 
-    public JCheckBox getBarAxisYesBox() {
-        return barAxisYesBox;
-    }
-
-    public JCheckBox getBarAxisNoBox() {
-        return barAxisNoBox;
+    public JCheckBox getBarAxisBox() {
+        return barAxisBox;
     }
 
     public JButton getBarColorBtn() {
