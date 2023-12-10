@@ -12,6 +12,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+
+/**
+ * Represents the upper card panel in the UI, handling the configuration of various components like Text, Image, and Table.
+ * This class provides a user interface for selecting these components and configuring their respective properties.
+ */
 public class UpperCard {
     private JLabel titleLabel;
     private JTextField titleField;
@@ -79,6 +84,10 @@ public class UpperCard {
     private boolean textRadioTXTSelected;
     private boolean textRadioDBSelected;
 
+    /**
+     * Constructor for the UpperCard class.
+     * Initializes UI components and sets up action listeners for the various controls.
+     */
     public UpperCard(){
         fieldFont = new Font("SansSerif", Font.PLAIN, 15);
         titleFieldFont = new Font("SansSerif", Font.BOLD, 20);
@@ -147,6 +156,9 @@ public class UpperCard {
         upperPanel.add(upperPanel2,BorderLayout.SOUTH);
     }
 
+    /**
+     * Initializes UI components for Text component configuration.
+     */
     public void textConstructor() {
         textCompSelected = false;
         textFromFileChooser = "";
@@ -244,6 +256,9 @@ public class UpperCard {
     public String getTextFromFileChooser(){return textFromFileChooser;}
     public String getReportTitle(){return reportTitle;}
 
+    /**
+     * Initializes UI components for Image component configuration.
+     */
     public void imageConstructor() {
         imageCompSelected = false;
         imageFilePath = "";
@@ -316,6 +331,9 @@ public class UpperCard {
     }
     public String getImageFilePath(){return imageFilePath;}
 
+    /**
+     * Initializes UI components for Table component configuration.
+     */
     public void tableConstructor() {
         tableCompSelected = false;
         tableDataSourceLabel = new JLabel("Select Data Source");
@@ -393,6 +411,8 @@ public class UpperCard {
         panel.setMinimumSize(new Dimension(width, height));
         panel.setMaximumSize(new Dimension(width, height));
     }
+
+    
     public JLabel getTitleLabel() {
         return titleLabel;
     }

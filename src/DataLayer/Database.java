@@ -5,6 +5,9 @@ import BL.Components.CustomPoint;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * DataSource implementation for reading data from a database.
+ */
 public class Database extends DataSource {
 
 	// Database connection parameters
@@ -15,12 +18,21 @@ public class Database extends DataSource {
 	private static final String TABLE_NAME_LINE = "LINECHART";
 	private static final String TABLE_NAME_BAR = "BARCHART";
 	private static final String TABLE_NAME_PIE = "PIECHART";
+
+	/**
+	 * Constructor for the Database class.
+	 *
+	 * @param chartType The type of chart for which data is being loaded.
+	 */
 	public Database(ChartType chartType) {
 		readData = new ArrayList<>();
 		this.chartType = chartType;
 	}
 
 	// Enum for ChartType
+	/**
+	 * Enum for different types of charts.
+	 */
 	public enum ChartType {
 		LINE, BAR, PIE
 	}

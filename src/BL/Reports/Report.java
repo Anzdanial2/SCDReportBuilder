@@ -5,6 +5,7 @@ import BL.Components.Image;
 import BL.Components.Text;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -43,5 +44,14 @@ public class Report {
 	}
 	public void export(Exporter export){
 		export.export();
+	}
+	public String getTitle(){return title;}
+
+	public LocalDateTime getTimeStamp() {
+		return timeStamp;
+	}
+
+	public ArrayList<Component> getComponentList(){
+		return componentList;
 	}
 }

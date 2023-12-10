@@ -9,6 +9,12 @@ import java.util.Map;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This class represents a line chart. It extends the Chart class and
+ * is used to display a line chart using data from a specified data source.
+ * It supports features like displaying legends and axis values.
+ */
+
 public class Line extends Chart {
 
 	private static final int AXIS_MARGIN = 80; // Increased margin for Y-axis label
@@ -17,6 +23,13 @@ public class Line extends Chart {
 	private boolean displayLegends;
 	private boolean displayAxisValues;
 
+	/**
+	 * Constructs a Line chart with the specified data source and configuration for legends and axis values.
+	 *
+	 * @param dataSource         The data source to use for chart data.
+	 * @param displayLegends     Boolean flag to determine if legends should be displayed.
+	 * @param displayAxisValues  Boolean flag to determine if axis values should be displayed.
+	 */
 	public Line(DataSource dataSource, boolean displayLegends, boolean displayAxisValues) {
 		super(dataSource);
 		this.displayLegends = displayLegends;
@@ -34,6 +47,9 @@ public class Line extends Chart {
 		return this;
 	}
 
+	/**
+	 * Initiates the data for the line chart from the customPointList.
+	 */
 	private void initData() {
 		data = new HashMap<>();
 		setData();
@@ -49,6 +65,11 @@ public class Line extends Chart {
 		}
 	}
 
+	/**
+	 * Sets the visibility of legends on the chart.
+	 *
+	 * @param displayLegends Boolean flag to set the visibility of legends.
+	 */
 	public void setDisplayLegends(boolean displayLegends) {
 		this.displayLegends = displayLegends;
 	}

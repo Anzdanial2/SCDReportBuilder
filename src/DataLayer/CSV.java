@@ -7,10 +7,19 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
+/**
+ * DataSource implementation for reading data from a CSV file.
+ */
 public class CSV extends DataSource {
 	private String fileName;
 	private boolean isLineData;  // Flag to identify line chart data
 
+	/**
+	 * Constructor for CSV class.
+	 *
+	 * @param fileName The path of the CSV file to be read.
+	 */
 	public CSV(String fileName) {
 		this.fileName = fileName;
 		readData = new ArrayList<>();

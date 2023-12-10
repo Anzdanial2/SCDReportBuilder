@@ -9,6 +9,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
+/**
+ * Represents the lower card panel in the UI, handling the configuration of chart types such as Pie, Line, and Bar charts.
+ * This class provides a user interface for selecting chart types, data sources, and other settings related to charts.
+ */
 public class LowerCard {
     //Pie
     JCheckBox pieCheckBox;
@@ -99,6 +104,13 @@ public class LowerCard {
     private boolean barLegendsSelected;
     private boolean barAxisValuesSelected;
 
+
+    /**
+     * Constructor for LowerCard class.
+     * Initializes UI components and sets up action listeners for the various controls.
+     *
+     * @param callback The callback interface for handling actions like generating reports.
+     */
     public LowerCard(GenerateReportCallback callback){
         fieldFont = new Font("SansSerif", Font.PLAIN, 15);
         boldFont = new Font("SansSerif", Font.BOLD, 16);
@@ -242,6 +254,11 @@ public class LowerCard {
 
     }
 
+    // Chart constructor methods...
+
+    /**
+     * Initializes UI components for Pie chart configuration.
+     */
     public void pieChartConstructor(){
         pieCheckBox = new JCheckBox("Pie Chart");
         pieCheckBox.setFocusable(false);
@@ -328,6 +345,10 @@ public class LowerCard {
 //        pieColorChooser.setFont(boldFont);
 //        pieColorChooser.setBackground(new Color(179, 208, 255));
     }
+
+    /**
+     * Initializes UI components for Line chart configuration.
+     */
     public void lineChartConstructor(){
         lineCheckBox = new JCheckBox("Line Chart");
         lineCheckBox.setFocusable(false);
@@ -438,6 +459,10 @@ public class LowerCard {
 //        lineColorBtn.setBackground(new Color(179, 208, 255));
 //        lineColorBtn.setFont(boldFont);
     }
+
+    /**
+     * Initializes UI components for Bar chart configuration.
+     */
     public void barChartConstructor(){
         barCheckBox = new JCheckBox("Bar Chart");
         barCheckBox.setFocusable(false);

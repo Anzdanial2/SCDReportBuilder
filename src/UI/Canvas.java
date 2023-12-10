@@ -20,6 +20,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
 
+
+/**
+ * The Canvas class is responsible for the user interface of the Report Builder application.
+ * It handles the creation and management of various frames for user interaction,
+ * including the welcome page, component selection, and report generation.
+ */
 public class Canvas implements GenerateReportCallback{
     private JFrame welcomeFrame;
     private JFrame selectedFrame;
@@ -27,6 +33,9 @@ public class Canvas implements GenerateReportCallback{
     private UpperCard uc;
     private LowerCard lc;
 
+    /**
+     * Displays the welcome page of the Report Builder application.
+     */
     private void welcomePage() {
         welcomeFrame = new JFrame("Report Builder");
         welcomeFrame.setTitle("Report Builder");
@@ -83,6 +92,9 @@ public class Canvas implements GenerateReportCallback{
         welcomeFrame.setVisible(true);
     }
 
+    /**
+     * Opens a new frame for selecting components for the report.
+     */
     private void selectComponents() {
         JFrame selectFrame = new JFrame("Report Builder");
         selectFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -117,7 +129,9 @@ public class Canvas implements GenerateReportCallback{
 
     }
 
-
+    /**
+     * Generates and displays the report based on the selected components and settings.
+     */
     private void generateReport() {
         // Dispose of the previous window
         if (selectedFrame != null) {
@@ -361,9 +375,11 @@ public class Canvas implements GenerateReportCallback{
         reportFrame.setVisible(true);
     }
 
-
-
-
+    /**
+     * Creates and returns a styled 'Back' button.
+     *
+     * @return A JButton configured as a 'Back' button.
+     */
     private JButton createBackButton() {
         JButton backButton = new JButton("Back");
         backButton.setFont(new Font("Arial", Font.BOLD, 14));
@@ -374,7 +390,10 @@ public class Canvas implements GenerateReportCallback{
         return backButton;
     }
 
-
+    /**
+     * Invoked when the 'Generate Report' button is clicked.
+     * Validates the selected options and triggers report generation.
+     */
     @Override
     public void onGenerateReportClicked() {
         int selectedChartsCount = 0;

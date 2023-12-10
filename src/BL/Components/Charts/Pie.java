@@ -8,15 +8,35 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/**
+ * This class represents a pie chart. It extends the Chart class and
+ * is used to display a pie chart using data from a specified data source.
+ * It includes features such as displaying legends and generating random colors for each pie slice.
+ */
 public class Pie extends Chart {
 	private Map<String, Integer> data;
 	private Color[] sliceColors;
 	private boolean displayLegends;
 
+	/**
+	 * Constructs a Pie chart with the specified data source and configuration for displaying legends.
+	 *
+	 * @param dataSource      The data source to use for chart data.
+	 * @param displayLegends  Boolean flag to determine if legends should be displayed.
+	 */
+
 	public Pie(DataSource dataSource, boolean displayLegends) {
 		super(dataSource);
 		this.displayLegends = displayLegends;
 	}
+
+	/**
+	 * Sets the visibility of legends on the chart.
+	 *
+	 * @param displayLegends Boolean flag to set the visibility of legends.
+	 */
+
 	public void setDisplayLegends(boolean displayLegends){
 		this.displayLegends = displayLegends;
 	}

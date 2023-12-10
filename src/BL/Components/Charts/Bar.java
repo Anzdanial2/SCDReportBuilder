@@ -8,6 +8,12 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class represents a bar chart. It extends the Chart class and
+ * is used to display a bar chart using data from a specified data source.
+ * It supports features like displaying legends and axis values.
+ */
+
 public class Bar extends Chart {
 
 	private static final int AXIS_MARGIN = 70;
@@ -16,6 +22,14 @@ public class Bar extends Chart {
 	private boolean displayAxisValues;
 
 	private Map<String, Integer> data;
+
+	/**
+	 * Constructs a Bar chart with the specified data source and configuration for legends and axis values.
+	 *
+	 * @param dataSource         The data source to use for chart data.
+	 * @param displayLegends     Boolean flag to determine if legends should be displayed.
+	 * @param displayAxisValues  Boolean flag to determine if axis values should be displayed.
+	 */
 
 	public Bar(DataSource dataSource, boolean displayLegends, boolean displayAxisValues) {
 		super(dataSource);
@@ -34,6 +48,10 @@ public class Bar extends Chart {
 		return this;
 	}
 
+	/**
+	 * Initiates the data for the bar chart from the customPointList.
+	 */
+
 	private void initData() {
 		data = new HashMap<>();
 		setData();
@@ -42,10 +60,20 @@ public class Bar extends Chart {
 		}
 	}
 
+	/**
+	 * Sets the visibility of legends on the chart.
+	 *
+	 * @param displayLegends Boolean flag to set the visibility of legends.
+	 */
 	public void setDisplayLegends(boolean displayLegends) {
 		this.displayLegends = displayLegends;
 	}
 
+	/**
+	 * Sets the visibility of axis values on the chart.
+	 *
+	 * @param displayAxisValues Boolean flag to set the visibility of axis values.
+	 */
 	public void setDisplayAxisValues(boolean displayAxisValues) {
 		this.displayAxisValues = displayAxisValues;
 	}
