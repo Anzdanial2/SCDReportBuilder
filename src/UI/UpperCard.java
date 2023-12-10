@@ -412,7 +412,7 @@ public class UpperCard {
         panel.setMaximumSize(new Dimension(width, height));
     }
 
-    
+
     public JLabel getTitleLabel() {
         return titleLabel;
     }
