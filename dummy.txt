@@ -1,0 +1,212 @@
+private void generateReport() {
+        // Dispose of the previous window
+        if (selectedFrame != null) {
+            selectedFrame.dispose();
+        }
+
+        Text txtComp = null;
+        Image imageComp = null;
+        Table tableComp = null;
+        Line lineChart = null;
+        Bar barChart = null;
+        Pie pieChart = null;
+
+        report = new Report(uc.getReportTitle());
+
+        if (lc.isLineChartSelected()) {
+            if (lc.isLineCSVSelected()) {
+                lineChart = new Line(new CSV(lc.getLineCSVPath()));
+                report.add(lineChart);
+            } else if (lc.isLineDBSelected()) {
+                lineChart = new Line(new Database(Database.ChartType.LINE));
+                report.add(lineChart);
+            }
+        }
+
+        if (lc.isBarChartSelected()) {
+            if (lc.isBarCSVSelected()) {
+                barChart = new Bar(new CSV(lc.getBarCSVPath()));
+                report.add(barChart);
+            } else if (lc.isBarDBSelected()) {
+                barChart = new Bar(new Database(Database.ChartType.BAR));
+                report.add(barChart);
+            }
+        }
+
+        if (lc.isPieChartSelected()) {
+            if (lc.isPieCSVSelected()) {
+                pieChart = new Pie(new CSV(lc.getPieCSVPath()));
+                report.add(pieChart);
+            } else if (lc.isPieDBSelected()) {
+                pieChart = new Pie(new Database(Database.ChartType.PIE));
+                report.add(pieChart);
+            }
+        }
+
+        if (uc.getTextCompSelected()) {
+            txtComp = new Text(uc.getTextFromFileChooser());
+            report.add(txtComp);
+        }
+
+        if (uc.getImageCompSelected()) {
+            imageComp = new Image(uc.getImageFilePath());
+            report.add(imageComp);
+        }
+
+        if (uc.getTableCompSelected() && lc.isLineChartSelected()) {
+            if (lc.isLineCSVSelected()) {
+                tableComp = new Table(new CSV(lc.getLineCSVPath()));
+                report.add(tableComp);
+            } else if (lc.isLineDBSelected()) {
+                tableComp = new Table(new Database(Database.ChartType.LINE));
+                report.add(tableComp);
+            }
+        } else if (uc.getTableCompSelected() && lc.isBarChartSelected()) {
+            if (lc.isBarChartSelected()) {
+                tableComp = new Table(new CSV(lc.getBarCSVPath()));
+                report.add(tableComp);
+            } else if (lc.isBarDBSelected()) {
+                tableComp = new Table(new Database(Database.ChartType.BAR));
+                report.add(tableComp);
+            }
+        } else if (uc.getTableCompSelected() && lc.isPieChartSelected()) {
+            if (lc.isPieCSVSelected()) {
+                tableComp = new Table(new CSV(lc.getPieCSVPath()));
+                report.add(tableComp);
+            } else if (lc.isPieDBSelected()) {
+                tableComp = new Table(new Database(Database.ChartType.PIE));
+                report.add(tableComp);
+            }
+        }
+
+        JFrame reportFrame = new JFrame("Generate Report");
+        reportFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        reportFrame.setSize(800, 600);
+
+        JButton backButton = createBackButton();
+        JButton exportButton = new JButton("Export As");
+
+        // Create a dropdown list for selecting the report type
+        String[] reportTypes = {"Select Type", "PNG", "PDF"};
+        JComboBox<String> typeDropDown = new JComboBox<>(reportTypes);
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selectComponents(); // Open the previous window (selectComponents)
+                reportFrame.dispose(); // Dispose of the current window (generateReport window)
+            }
+        });
+
+        JPanel buttonPanel = new JPanel(new BorderLayout());
+        buttonPanel.add(backButton, BorderLayout.WEST);
+
+        // Set the font for the Report Title label
+        Font titleFont = new Font("SansSerif", Font.BOLD, 20);
+        JLabel reportTitleLabel = new JLabel(uc.getReportTitle(), SwingConstants.CENTER);
+        reportTitleLabel.setFont(titleFont);
+
+        buttonPanel.add(reportTitleLabel, BorderLayout.CENTER);
+
+        JPanel exportPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        exportPanel.add(exportButton);
+        exportPanel.add(typeDropDown);
+
+        buttonPanel.add(exportPanel, BorderLayout.EAST);
+
+        JPanel reportPanel = new JPanel(new BorderLayout());
+        reportPanel.add(buttonPanel, BorderLayout.NORTH);
+
+        // Main content panel with BorderLayout for top-left, top-right, and bottom components
+        JPanel contentPanel = new JPanel(new GridLayout(1, 2));
+
+        // Placeholder for the ChartComponents (triangle placement in the first column)
+        JPanel chartPanel = new JPanel(new GridLayout(2, 2));
+
+        // Check if LineChartComponent was selected and add it to the placeholder
+        if (lc.isLineChartSelected() && lineChart != null) {
+            JPanel lineChartPanel = (JPanel) lineChart.getPanel(); // Replace this with the actual method to get the panel
+            chartPanel.add(lineChartPanel);
+        } else {
+            // Placeholder for LineChartComponent
+            JPanel lineChartPanel = new JPanel();
+            lineChartPanel.setBorder(BorderFactory.createTitledBorder("Line Chart"));
+            chartPanel.add(lineChartPanel);
+        }
+
+        // Check if BarChartComponent was selected and add it to the placeholder
+        if (lc.isBarChartSelected() && barChart != null) {
+            JPanel barChartPanel = (JPanel) barChart.getPanel(); // Replace this with the actual method to get the panel
+            chartPanel.add(barChartPanel);
+        } else {
+            // Placeholder for BarChartComponent
+            JPanel barChartPanel = new JPanel();
+            barChartPanel.setBorder(BorderFactory.createTitledBorder("Bar Chart"));
+            chartPanel.add(barChartPanel);
+        }
+
+        // Check if PieChartComponent was selected and add it to the placeholder
+        if (lc.isPieChartSelected() && pieChart != null) {
+            JPanel pieChartPanel = (JPanel) pieChart.getPanel(); // Replace this with the actual method to get the panel
+            chartPanel.add(pieChartPanel);
+        } else {
+            // Placeholder for PieChartComponent
+            JPanel pieChartPanel = new JPanel();
+            pieChartPanel.setBorder(BorderFactory.createTitledBorder("Pie Chart"));
+            chartPanel.add(pieChartPanel);
+        }
+
+        JPanel emptyPanel = new JPanel();
+        chartPanel.add(emptyPanel);
+        contentPanel.add(chartPanel);
+
+        report.load();
+        report.display();
+        // Sidebar on the right with TextComponent, TableComponent, and ImageComponent
+        JPanel sidebarPanel = new JPanel(new GridLayout(3, 1));
+
+        // Check if TextComponent was selected and add it to the placeholder
+        if (uc.getTextCompSelected() && txtComp != null) {
+            JPanel textPanel = (JPanel) txtComp.getPanel();
+            sidebarPanel.add(textPanel);
+        } else {
+            // Placeholder for TextComponent on the right side
+            JPanel textPanel = new JPanel();
+            textPanel.setBorder(BorderFactory.createTitledBorder("Text"));
+            sidebarPanel.add(textPanel);
+        }
+
+        // Check if TableComponent was selected and add it to the placeholder
+        if (uc.getTableCompSelected() && tableComp != null) {
+            JPanel tablePanel = (JPanel) tableComp.getPanel();
+            sidebarPanel.add(tablePanel);
+        } else {
+            // Placeholder for TableComponent on the right side
+            JPanel tablePanel = new JPanel();
+            tablePanel.setBorder(BorderFactory.createTitledBorder("Table"));
+            sidebarPanel.add(tablePanel);
+        }
+
+        // Check if ImageComponent was selected and add it to the placeholder
+        if (uc.getImageCompSelected() && imageComp != null) {
+            JPanel imagePanel = (JPanel) imageComp.getPanel();
+            sidebarPanel.add(imagePanel);
+        } else {
+            // Placeholder for ImageComponent on the right side
+            JPanel imagePanel = new JPanel();
+            imagePanel.setBorder(BorderFactory.createTitledBorder("Image"));
+            sidebarPanel.add(imagePanel);
+        }
+
+        contentPanel.add(sidebarPanel);
+
+        // Wrap the content panel in a JScrollPane with both horizontal and vertical scrolling
+        JScrollPane scrollPane = new JScrollPane(contentPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+
+        reportPanel.add(scrollPane, BorderLayout.CENTER);
+
+        reportFrame.add(reportPanel);
+
+        reportFrame.setLocationRelativeTo(null);
+        reportFrame.setVisible(true);
+    }

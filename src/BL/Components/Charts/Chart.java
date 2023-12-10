@@ -9,6 +9,7 @@ public abstract class Chart extends Component {
 	}
 
 	public void display(){
+		draw();
 	}
 	protected abstract void draw();
 }

@@ -15,7 +15,6 @@ public class LowerCard {
     JLabel pieSelectSourceLabel;
     JRadioButton pieCSVBtn;
     JRadioButton pieDbBtn;
-
     ButtonGroup pieSource;
     JButton pieFileChooser;
     JLabel pieLegendsLabel;
@@ -81,11 +80,179 @@ public class LowerCard {
     Font mediumFont;
     Font componentFont;
     Font fieldFont;
+
+    //LINE
+    private boolean lineChartSelected;
+    private boolean lineCSVSelected;
+    private boolean lineDBSelected;
+    private String lineCSVPath;
+    private boolean lineLegendsSelected;
+    private boolean lineAxisValuesSelected;
+
+    //PIE
+    private boolean pieChartSelected;
+    private boolean pieCSVSelected;
+    private boolean pieDBSelected;
+    private String pieCSVPath;
+    private boolean pieLegendsSelected;
+
+    //BAR
+    private boolean barChartSelected;
+    private boolean barCSVSelected;
+    private boolean barDBSelected;
+    private String barCSVPath;
+    private boolean barLegendsSelected;
+    private boolean barAxisValuesSelected;
+
     public LowerCard(GenerateReportCallback callback){
         fieldFont = new Font("SansSerif", Font.PLAIN, 15);
         boldFont = new Font("SansSerif", Font.BOLD, 16);
         mediumFont = new Font("SansSerif", Font.TRUETYPE_FONT, 15);
         componentFont = new Font("SansSerif", Font.BOLD, 20);
+        pieChartConstructor();
+        lineChartConstructor();
+        barChartConstructor();
+
+        generateReportBtn = new JButton("Generate Report");
+        String[] layoutOptions = {"Default layout","Image,Text,Table,Chart",
+                "Text,Image,Table,Chart","Image,Chart,Table,Text","Table,Text,Image,Chart"};
+        layoutDropDown = new JComboBox<>(layoutOptions);
+        layoutDropDown.setFont(boldFont);
+        generateReportBtn.setFocusable(false);
+        generateReportBtn.setFont(componentFont);
+        generateReportBtn.setBackground(new Color(77, 255, 136));
+        generateReportBtn.setPreferredSize(new Dimension(200,50));
+
+        piePanel1 = new JPanel(new GridLayout(2,1,5,7));
+        piePanel1.add(pieCheckBox);
+        piePanel1.add(pieSelectSourceLabel);
+
+        piePanel2 = new JPanel(new GridLayout(2,2,5,7));
+        piePanel2.add(pieCSVBtn);
+        piePanel2.add(pieDbBtn);
+        piePanel2.add(pieFileChooser);
+        piePanel3 = new JPanel(new FlowLayout(FlowLayout.LEFT,5,7));
+        piePanel3.add(pieLegendsLabel);
+        piePanel3.add(pieYesBox);
+        piePanel3.add(pieNoBox);
+//        piePanel3.add(pieColorChooser);
+
+        piePanel = new JPanel();
+        piePanel.setLayout(new BoxLayout(piePanel,BoxLayout.Y_AXIS));
+        piePanel.add(piePanel1);
+        piePanel.add(piePanel2);
+        piePanel.add(piePanel3);
+
+        linePanel1 = new JPanel(new GridLayout(2,1,5,7));
+        linePanel1.add(lineCheckBox);
+        linePanel1.add(lineSelectSourceLabel);
+        linePanel2 = new JPanel(new GridLayout(2,2,5,7));
+        linePanel2.add(lineCSVBtn);
+        linePanel2.add(lineDbBtn);
+        linePanel2.add(lineFileChooser);
+//        linePanel3 = new JPanel(new FlowLayout(FlowLayout.LEFT,5,7));
+//        linePanel3.add(lineXaxisLabel);
+//        linePanel3.add(lineXaxisField);
+//        linePanel3.add(lineYaxisLabel);
+//        linePanel3.add(lineYaxisField);
+
+
+        linePanel4 = new JPanel(new GridLayout(2,3,5,7));
+        linePanel4.add(lineLegendsLabel);
+        linePanel4.add(lineLegendsYesBox);
+        linePanel4.add(lineLegendsNoBox);
+        linePanel4.add(lineAxisValueLabel);
+        linePanel4.add(lineAxisYesBox);
+        linePanel4.add(lineAxisNoBox);
+//        linePanel4.add(lineColorBtn);
+        linePanel = new JPanel();
+        linePanel.setLayout(new BoxLayout(linePanel,BoxLayout.Y_AXIS));
+        linePanel.add(linePanel1);
+        linePanel.add(linePanel2);
+//        linePanel.add(linePanel3);
+        linePanel.add(linePanel4);
+
+        barPanel1 = new JPanel(new GridLayout(2,1,5,7));
+        barPanel1.add(barCheckBox);
+        barPanel1.add(barSelectSourceLabel);
+        barPanel2 = new JPanel(new GridLayout(2,2,5,7));
+        barPanel2.add(barCSVBtn);
+        barPanel2.add(barDbBtn);
+        barPanel2.add(barFileChooser);
+//        barPanel3 = new JPanel(new FlowLayout(FlowLayout.LEFT,5,7));
+//        barPanel3.add(barXaxisLabel);
+//        barPanel3.add(barXaxisField);
+//        barPanel3.add(barYaxisLabel);
+//        barPanel3.add(barYaxisField);
+
+
+        barPanel4 = new JPanel(new GridLayout(2,3,5,7));
+        barPanel4.add(barLegendsLabel);
+        barPanel4.add(barLegendsYesBox);
+        barPanel4.add(barLegendsNoBox);
+        barPanel4.add(barAxisValueLabel);
+        barPanel4.add(barAxisYesBox);
+        barPanel4.add(barAxisNoBox);
+//        barPanel4.add(barColorBtn);
+        barPanel = new JPanel();
+        barPanel.setLayout(new BoxLayout(barPanel,BoxLayout.Y_AXIS));
+        barPanel.add(barPanel1);
+        barPanel.add(barPanel2);
+//        barPanel.add(barPanel3);
+        barPanel.add(barPanel4);
+        //background color
+        piePanel.setBackground(new Color(83, 140, 198)); // light blue
+        setPanelBackground(piePanel, new Color(83, 140, 198));
+        linePanel.setBackground(new Color(83, 140, 198));
+        setPanelBackground(linePanel, new Color(83, 140, 198));
+        barPanel.setBackground(new Color(83, 140, 198)); // light blue
+        setPanelBackground(barPanel, new Color(83, 140, 198));
+        Border roundedBorder = new LineBorder(new Color(83, 140, 198), 2, true);
+        piePanel.setBorder(new CompoundBorder(roundedBorder, BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+        linePanel.setBorder(new CompoundBorder(roundedBorder, BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+        barPanel.setBorder(new CompoundBorder(roundedBorder, BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+        lowerPanel = new JPanel(new BorderLayout(10, 10)); // added gaps between components
+
+        JPanel topPanel = new JPanel(new GridLayout(1, 2, 10, 10)); // increased the horizontal gap
+        topPanel.add(linePanel);
+        topPanel.add(barPanel);
+
+        lowerPanel.add(topPanel, BorderLayout.NORTH);
+
+        JPanel bottomPanel = new JPanel(new BorderLayout(10, 10)); // added gaps between components
+        piePanel.setBorder(new CompoundBorder(roundedBorder, BorderFactory.createEmptyBorder(20, 20, 20, 20))); // increased border insets
+        bottomPanel.add(piePanel, BorderLayout.CENTER);
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10)); // added gaps between components
+        buttonPanel.add(generateReportBtn);
+        bottomPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        lowerPanel.add(bottomPanel, BorderLayout.CENTER);
+
+        // Adjust margins or padding around the panels if necessary
+        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10)); // Adjust top and bottom padding for the top panel
+        bottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
+
+
+        // Added the following code to set the border to EmptyBorder
+        pieCSVBtn.setBorder(new EmptyBorder(0, 0, 0, 0));
+        pieDbBtn.setBorder(new EmptyBorder(0, 0, 0, 0));
+        lineCSVBtn.setBorder(new EmptyBorder(0, 0, 0, 0));
+        lineDbBtn.setBorder(new EmptyBorder(0, 0, 0, 0));
+        barCSVBtn.setBorder(new EmptyBorder(0, 0, 0, 0));
+        barDbBtn.setBorder(new EmptyBorder(0, 0, 0, 0));
+
+
+        generateReportBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                callback.onGenerateReportClicked();
+            }
+        });
+
+    }
+
+    public void pieChartConstructor(){
         pieCheckBox = new JCheckBox("Pie Chart");
         pieCheckBox.setFocusable(false);
         pieCheckBox.setFont(componentFont);
@@ -114,23 +281,122 @@ public class LowerCard {
         pieNoBox = new JCheckBox("No");
         pieNoBox.setFocusable(false);
         pieNoBox.setFont(mediumFont);
-        pieColorChooser = new JButton("Choose Color");
-        pieColorChooser.setFocusable(false);
-        pieColorChooser.setFont(boldFont);
-        pieColorChooser.setBackground(new Color(179, 208, 255));
 
-        //Line
+        pieCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pieChartSelected = pieCheckBox.isSelected();
+            }
+        });
+
+        pieCSVBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (pieChartSelected) {
+                    pieCSVSelected = pieCSVBtn.isSelected();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Pie Chart Not Selected", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        pieDbBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (pieChartSelected) {
+                    pieDBSelected = pieDbBtn.isSelected();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Pie Chart Not Selected", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        pieFileChooser.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (pieChartSelected) {
+                    JFileChooser imageFileChooser = new JFileChooser();
+                    int result = imageFileChooser.showOpenDialog(null);
+
+                    if (result == JFileChooser.APPROVE_OPTION) {
+                        pieCSVPath = imageFileChooser.getSelectedFile().getAbsolutePath();
+                        JOptionPane.showMessageDialog(null, "File Path:\n" + pieCSVPath, "File Loaded Successfully", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Pie Chart Not Selected", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        pieYesBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(pieChartSelected){
+                    pieLegendsSelected = pieYesBox.isSelected();
+                    pieNoBox.setSelected(!pieYesBox.isSelected()); // Unselect the "No" box when "Yes" is selected
+                }
+            }
+        });
+
+        pieNoBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(pieChartSelected){
+                    pieLegendsSelected = !pieNoBox.isSelected(); // If "No" is selected, pieLegendsSelected should be false
+                    pieYesBox.setSelected(!pieNoBox.isSelected()); // Unselect the "Yes" box when "No" is selected
+                }
+            }
+        });
+
+
+//        pieColorChooser = new JButton("Choose Color");
+//        pieColorChooser.setFocusable(false);
+//        pieColorChooser.setFont(boldFont);
+//        pieColorChooser.setBackground(new Color(179, 208, 255));
+    }
+    public void lineChartConstructor(){
         lineCheckBox = new JCheckBox("Line Chart");
         lineCheckBox.setFocusable(false);
         lineCheckBox.setFont(componentFont);
+        lineCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                lineChartSelected = lineCheckBox.isSelected();
+            }
+        });
+
         lineSelectSourceLabel = new JLabel("Select Data Source");
         lineSelectSourceLabel.setFont(boldFont);
         lineCSVBtn = new JRadioButton("CSV");
         lineCSVBtn.setFocusable(false);
         lineCSVBtn.setFont(mediumFont);
+
+        lineCSVBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(lineChartSelected){
+                    lineCSVSelected = lineCSVBtn.isSelected();
+                }
+                else
+                    JOptionPane.showMessageDialog(null, "Line Chart Not Selected", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
         lineDbBtn = new JRadioButton("Data Base");
         lineDbBtn.setFocusable(false);
         lineDbBtn.setFont(mediumFont);
+
+        lineDbBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(lineChartSelected){
+                    lineDBSelected = lineDbBtn.isSelected();
+                }
+                else
+                    JOptionPane.showMessageDialog(null, "Line Chart Not Selected", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
         lineSource = new ButtonGroup();
         lineSource.add(lineCSVBtn);
         lineSource.add(lineDbBtn);
@@ -138,14 +404,34 @@ public class LowerCard {
         lineFileChooser.setFocusable(false);
         lineFileChooser.setBackground(new Color(179, 208, 255));
         lineFileChooser.setFont(boldFont);
-        lineXaxisLabel = new JLabel("X-axis Name");
-        lineXaxisLabel.setFont(boldFont);
-        lineYaxisLabel = new JLabel("Y-axis Name");
-        lineYaxisLabel.setFont(boldFont);
-        lineXaxisField = new JTextField(10);
-        lineXaxisField.setFont(fieldFont);
-        lineYaxisField = new JTextField(10);
-        lineYaxisField.setFont(fieldFont);
+        lineFileChooser.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (lineChartSelected) {
+                    JFileChooser imageFileChooser = new JFileChooser();
+                    int result = imageFileChooser.showOpenDialog(null);
+
+                    // Check if a file is selected
+                    if (result == JFileChooser.APPROVE_OPTION) {
+                        lineCSVPath = imageFileChooser.getSelectedFile().getAbsolutePath();
+                        // Do something with the file contents (e.g., store it in a variable)
+                        JOptionPane.showMessageDialog(null, "File Path:\n" + lineCSVPath, "File Loaded Successfully", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } else {
+                    // Provide a parent component for the JOptionPane
+                    JOptionPane.showMessageDialog(null, "Line Chart Not Selected", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+//        lineXaxisLabel = new JLabel("X-axis Name");
+//        lineXaxisLabel.setFont(boldFont);
+//        lineYaxisLabel = new JLabel("Y-axis Name");
+//        lineYaxisLabel.setFont(boldFont);
+//        lineXaxisField = new JTextField(10);
+//        lineXaxisField.setFont(fieldFont);
+//        lineYaxisField = new JTextField(10);
+//        lineYaxisField.setFont(fieldFont);
         lineLegendsLabel = new JLabel("Display Legends");
         lineLegendsLabel.setFont(boldFont);
         lineLegendsYesBox = new JCheckBox("Yes");
@@ -154,6 +440,7 @@ public class LowerCard {
         lineLegendsNoBox = new JCheckBox("No");
         lineLegendsNoBox.setFocusable(false);
         lineLegendsNoBox.setFont(mediumFont);
+
         lineAxisValueLabel = new JLabel("Display Axis Values");
         lineAxisValueLabel.setFont(boldFont);
         lineAxisYesBox = new JCheckBox("Yes");
@@ -162,38 +449,124 @@ public class LowerCard {
         lineAxisNoBox = new JCheckBox("No");
         lineAxisNoBox.setFocusable(false);
         lineAxisNoBox.setFont(mediumFont);
-        lineColorBtn = new JButton("Choose Color");
-        lineColorBtn.setFocusable(false);
-        lineColorBtn.setBackground(new Color(179, 208, 255));
-        lineColorBtn.setFont(boldFont);
 
-        //Bar
+        lineLegendsYesBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Set the legends selected based on the state of the Yes checkbox
+                lineLegendsSelected = lineLegendsYesBox.isSelected();
+            }
+        });
+
+        lineLegendsNoBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // If No is selected, legends should not be selected
+                lineLegendsSelected = !lineLegendsNoBox.isSelected();
+            }
+        });
+
+        lineAxisYesBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Set the axis values selected based on the state of the Yes checkbox
+                lineAxisValuesSelected = lineAxisYesBox.isSelected();
+            }
+        });
+
+        lineAxisNoBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // If No is selected, axis values should not be selected
+                lineAxisValuesSelected = !lineAxisNoBox.isSelected();
+            }
+        });
+
+//        lineColorBtn = new JButton("Choose Color");
+//        lineColorBtn.setFocusable(false);
+//        lineColorBtn.setBackground(new Color(179, 208, 255));
+//        lineColorBtn.setFont(boldFont);
+    }
+    public void barChartConstructor(){
         barCheckBox = new JCheckBox("Bar Chart");
         barCheckBox.setFocusable(false);
         barCheckBox.setFont(componentFont);
+
+        barCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                barChartSelected = barCheckBox.isSelected();
+            }
+        });
+
         barSelectSourceLabel = new JLabel("Select Data Source");
         barSelectSourceLabel.setFont(boldFont);
         barCSVBtn = new JRadioButton("CSV");
         barCSVBtn.setFocusable(false);
         barCSVBtn.setFont(mediumFont);
+
+        barCSVBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(barChartSelected){
+                    barCSVSelected = barCSVBtn.isSelected();
+                }
+                else
+                    JOptionPane.showMessageDialog(null, "Bar Chart Not Selected", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
         barDbBtn = new JRadioButton("Data Base");
         barDbBtn.setFocusable(false);
         barDbBtn.setFont(mediumFont);
 
+        barDbBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(barChartSelected){
+                    barDBSelected = barDbBtn.isSelected();
+                }
+                else
+                    JOptionPane.showMessageDialog(null, "Bar Chart Not Selected", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+
         barSource = new ButtonGroup();
         barSource.add(lineCSVBtn);
         barSource.add(lineDbBtn);
-        barXaxisLabel = new JLabel("X-axis Name");
-        barXaxisLabel.setFont(boldFont);
-        barYaxisLabel = new JLabel("Y-axis Name");
-        barYaxisLabel.setFont(boldFont);
-        barXaxisField = new JTextField(10);
-        barXaxisField.setFont(fieldFont);
-        barYaxisField = new JTextField(10);
-        barYaxisField.setFont(fieldFont);
+//        barXaxisLabel = new JLabel("X-axis Name");
+//        barXaxisLabel.setFont(boldFont);
+//        barYaxisLabel = new JLabel("Y-axis Name");
+//        barYaxisLabel.setFont(boldFont);
+//        barXaxisField = new JTextField(10);
+//        barXaxisField.setFont(fieldFont);
+//        barYaxisField = new JTextField(10);
+//        barYaxisField.setFont(fieldFont);
         barFileChooser = new JButton("Choose CSV");
         barFileChooser.setFocusable(false);
         barFileChooser.setBackground(new Color(179, 208, 255));
+
+        barFileChooser.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (barChartSelected) {
+                    JFileChooser imageFileChooser = new JFileChooser();
+                    int result = imageFileChooser.showOpenDialog(null);
+
+                    // Check if a file is selected
+                    if (result == JFileChooser.APPROVE_OPTION) {
+                        barCSVPath = imageFileChooser.getSelectedFile().getAbsolutePath();
+                        // Do something with the file contents (e.g., store it in a variable)
+                        JOptionPane.showMessageDialog(null, "File Path:\n" + barCSVPath, "File Loaded Successfully", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } else {
+                    // Provide a parent component for the JOptionPane
+                    JOptionPane.showMessageDialog(null, "Bar Chart Not Selected", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
 //        barFileChooser.setForeground(new Color(51, 133, 255));
         barFileChooser.setFont(boldFont);
         barLegendsLabel = new JLabel("Display Legends");
@@ -212,154 +585,124 @@ public class LowerCard {
         barAxisNoBox = new JCheckBox("No");
         barAxisNoBox.setFocusable(false);
         barAxisNoBox.setFont(mediumFont);
-        barColorBtn = new JButton("Choose Color");
-        barColorBtn.setFocusable(false);
-        barColorBtn.setFont(boldFont);
-        barColorBtn.setBackground(new Color(179, 208, 255));
-        generateReportBtn = new JButton("Generate Report");
-        String[] layoutOptions = {"Default layout","Image,Text,Table,Chart",
-                "Text,Image,Table,Chart","Image,Chart,Table,Text","Table,Text,Image,Chart"};
-        layoutDropDown = new JComboBox<>(layoutOptions);
-        layoutDropDown.setFont(boldFont);
-        generateReportBtn.setFocusable(false);
-        generateReportBtn.setFont(componentFont);
-        generateReportBtn.setBackground(new Color(77, 255, 136));
-        generateReportBtn.setPreferredSize(new Dimension(200,50));
+        ButtonGroup barAxisGroup = new ButtonGroup();
+        barAxisGroup.add(barAxisYesBox);
+        barAxisGroup.add(barAxisNoBox);
 
-        piePanel1 = new JPanel(new GridLayout(2,1,5,7));
-        piePanel1.add(pieCheckBox);
-        piePanel1.add(pieSelectSourceLabel);
+        ButtonGroup barLegendsGroup = new ButtonGroup();
+        barLegendsGroup.add(barLegendsYesBox);
+        barLegendsGroup.add(barLegendsNoBox);
 
-        piePanel2 = new JPanel(new GridLayout(2,2,5,7));
-        piePanel2.add(pieCSVBtn);
-        piePanel2.add(pieDbBtn);
-        piePanel2.add(pieFileChooser);
-        piePanel3 = new JPanel(new FlowLayout(FlowLayout.LEFT,5,7));
-        piePanel3.add(pieLegendsLabel);
-        piePanel3.add(pieYesBox);
-        piePanel3.add(pieNoBox);
-        piePanel3.add(pieColorChooser);
-
-        piePanel = new JPanel();
-        piePanel.setLayout(new BoxLayout(piePanel,BoxLayout.Y_AXIS));
-        piePanel.add(piePanel1);
-        piePanel.add(piePanel2);
-        piePanel.add(piePanel3);
-
-        linePanel1 = new JPanel(new GridLayout(2,1,5,7));
-        linePanel1.add(lineCheckBox);
-        linePanel1.add(lineSelectSourceLabel);
-        linePanel2 = new JPanel(new GridLayout(2,2,5,7));
-        linePanel2.add(lineCSVBtn);
-        linePanel2.add(lineDbBtn);
-        linePanel2.add(lineFileChooser);
-        linePanel3 = new JPanel(new FlowLayout(FlowLayout.LEFT,5,7));
-        linePanel3.add(lineXaxisLabel);
-        linePanel3.add(lineXaxisField);
-        linePanel3.add(lineYaxisLabel);
-        linePanel3.add(lineYaxisField);
-
-
-        linePanel4 = new JPanel(new GridLayout(3,3,5,7));
-        linePanel4.add(lineLegendsLabel);
-        linePanel4.add(lineLegendsYesBox);
-        linePanel4.add(lineLegendsNoBox);
-        linePanel4.add(lineAxisValueLabel);
-        linePanel4.add(lineAxisYesBox);
-        linePanel4.add(lineAxisNoBox);
-        linePanel4.add(lineColorBtn);
-        linePanel = new JPanel();
-        linePanel.setLayout(new BoxLayout(linePanel,BoxLayout.Y_AXIS));
-        linePanel.add(linePanel1);
-        linePanel.add(linePanel2);
-        linePanel.add(linePanel3);
-        linePanel.add(linePanel4);
-
-        barPanel1 = new JPanel(new GridLayout(2,1,5,7));
-        barPanel1.add(barCheckBox);
-        barPanel1.add(barSelectSourceLabel);
-        barPanel2 = new JPanel(new GridLayout(2,2,5,7));
-        barPanel2.add(barCSVBtn);
-        barPanel2.add(barDbBtn);
-        barPanel2.add(barFileChooser);
-        barPanel3 = new JPanel(new FlowLayout(FlowLayout.LEFT,5,7));
-        barPanel3.add(barXaxisLabel);
-        barPanel3.add(barXaxisField);
-        barPanel3.add(barYaxisLabel);
-        barPanel3.add(barYaxisField);
-
-
-        barPanel4 = new JPanel(new GridLayout(3,3,5,7));
-        barPanel4.add(barLegendsLabel);
-        barPanel4.add(barLegendsYesBox);
-        barPanel4.add(barLegendsNoBox);
-        barPanel4.add(barAxisValueLabel);
-        barPanel4.add(barAxisYesBox);
-        barPanel4.add(barAxisNoBox);
-        barPanel4.add(barColorBtn);
-        barPanel = new JPanel();
-        barPanel.setLayout(new BoxLayout(barPanel,BoxLayout.Y_AXIS));
-        barPanel.add(barPanel1);
-        barPanel.add(barPanel2);
-        barPanel.add(barPanel3);
-        barPanel.add(barPanel4);
-        //background color
-        piePanel.setBackground(new Color(83, 140, 198)); // light blue
-        setPanelBackground(piePanel, new Color(83, 140, 198));
-        linePanel.setBackground(new Color(83, 140, 198));
-        setPanelBackground(linePanel, new Color(83, 140, 198));
-        barPanel.setBackground(new Color(83, 140, 198)); // light blue
-        setPanelBackground(barPanel, new Color(83, 140, 198));
-        Border roundedBorder = new LineBorder(new Color(83, 140, 198), 2, true);
-        piePanel.setBorder(new CompoundBorder(roundedBorder, BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-        linePanel.setBorder(new CompoundBorder(roundedBorder, BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-        barPanel.setBorder(new CompoundBorder(roundedBorder, BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-        lowerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT,20,10));
-        lowerPanel.add(linePanel);
-        lowerPanel.add(barPanel);
-        lowerPanel.add(piePanel);
-        lowerPanel.add(layoutDropDown);
-        lowerPanel.add(generateReportBtn);
-
-
-        // Added the following code to set the border to EmptyBorder
-        pieCSVBtn.setBorder(new EmptyBorder(0, 0, 0, 0));
-        pieDbBtn.setBorder(new EmptyBorder(0, 0, 0, 0));
-        lineCSVBtn.setBorder(new EmptyBorder(0, 0, 0, 0));
-        lineDbBtn.setBorder(new EmptyBorder(0, 0, 0, 0));
-        barCSVBtn.setBorder(new EmptyBorder(0, 0, 0, 0));
-        barDbBtn.setBorder(new EmptyBorder(0, 0, 0, 0));
-
-
-        generateReportBtn.addActionListener(new ActionListener() {
+        barAxisYesBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                callback.onGenerateReportClicked();
+                if (barChartSelected) {
+                    barAxisValuesSelected = barAxisYesBox.isSelected();
+                }
             }
         });
 
+        barAxisNoBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (barChartSelected) {
+                    barAxisValuesSelected = !barAxisNoBox.isSelected();
+                }
+            }
+        });
+
+        barLegendsYesBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (barChartSelected) {
+                    barLegendsSelected = barLegendsYesBox.isSelected();
+                }
+            }
+        });
+
+        barLegendsNoBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (barChartSelected) {
+                    barLegendsSelected = !barLegendsNoBox.isSelected();
+                }
+            }
+        });
+
+//        barColorBtn = new JButton("Choose Color");
+//        barColorBtn.setFocusable(false);
+//        barColorBtn.setFont(boldFont);
+//        barColorBtn.setBackground(new Color(179, 208, 255));
     }
 
-    private void openReportWindow() {
-        JFrame reportFrame = new JFrame("Report Window");
-        reportFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Dispose on close to close only this window
-        reportFrame.setSize(400, 300);
+    public boolean isLineChartSelected() {
+        return lineChartSelected;
+    }
 
-        JButton backButton = new JButton("Back");
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                reportFrame.dispose(); // Close the current window
-            }
-        });
+    public boolean isLineCSVSelected() {
+        return lineCSVSelected;
+    }
 
-        JPanel panel = new JPanel();
-        panel.add(new JLabel("This is the report window."));
-        panel.add(backButton);
+    public boolean isLineDBSelected() {
+        return lineDBSelected;
+    }
 
-        reportFrame.add(panel);
-        reportFrame.setLocationRelativeTo(null);
-        reportFrame.setVisible(true);
+    public String getLineCSVPath() {
+        return lineCSVPath;
+    }
+
+    public boolean isLineLegendsSelected() {
+        return lineLegendsSelected;
+    }
+
+    public boolean isLineAxisValuesSelected() {
+        return lineAxisValuesSelected;
+    }
+
+    // Getters for Bar Chart
+    public boolean isBarChartSelected() {
+        return barChartSelected;
+    }
+
+    public boolean isBarCSVSelected() {
+        return barCSVSelected;
+    }
+
+    public boolean isBarDBSelected() {
+        return barDBSelected;
+    }
+
+    public String getBarCSVPath() {
+        return barCSVPath;
+    }
+
+    public boolean isBarLegendsSelected() {
+        return barLegendsSelected;
+    }
+
+    public boolean isBarAxisValuesSelected() {
+        return barAxisValuesSelected;
+    }
+
+    // Getters for Pie Chart
+    public boolean isPieChartSelected() {
+        return pieChartSelected;
+    }
+
+    public boolean isPieCSVSelected() {
+        return pieCSVSelected;
+    }
+
+    public boolean isPieDBSelected() {
+        return pieDBSelected;
+    }
+
+    public String getPieCSVPath() {
+        return pieCSVPath;
+    }
+
+    public boolean isPieLegendsSelected() {
+        return pieLegendsSelected;
     }
 
     private void setPanelBackground(Container container, Color color) {
@@ -380,7 +723,6 @@ public class LowerCard {
         button.setContentAreaFilled(false);
         button.setOpaque(true);
     }
-
 
     public JPanel getLowerPanel() {
         return lowerPanel;

@@ -11,9 +11,13 @@ import java.util.Map;
 public class Pie extends Chart {
 	private Map<String, Integer> data;
 	private Color[] sliceColors;
+	private boolean displayLegends;
 
-	public Pie(DataSource dataSource) {
+	public Pie(DataSource dataSource, boolean displayLegends) {
 		super(dataSource);
+	}
+	public void setDisplayLegends(boolean displayLegends){
+		this.displayLegends = displayLegends;
 	}
 
 	private void initData() {
@@ -60,12 +64,13 @@ public class Pie extends Chart {
 			// Draw pie slice
 			g.fillArc(centerX - radius, centerY - radius, 2 * radius, 2 * radius, startAngle, arcAngle);
 
-			// Draw color legend
-			g.fillRect(400, 50 + colorIndex * 30, 20, 20);
+			if(displayLegends) {
+				// Draw color legend
+				g.fillRect(400, 50 + colorIndex * 30, 20, 20);
 
-			// Draw label
-			g.drawString(label + " (" + frequency + ")", 430, 65 + colorIndex * 30);
-
+				// Draw label
+				g.drawString(label + " (" + frequency + ")", 430, 65 + colorIndex * 30);
+			}
 			startAngle += arcAngle;
 			colorIndex++;
 		}
@@ -79,7 +84,7 @@ public class Pie extends Chart {
 
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Pie Chart Example");
-		Pie pieChart = new Pie(new Database(Database.ChartType.PIE));
+		Pie pieChart = new Pie(new Database(Database.ChartType.PIE), false);
 		pieChart.draw();
 		frame.add(pieChart);
 
@@ -90,6 +95,7 @@ public class Pie extends Chart {
 
 	@Override
 	protected void draw() {
+		setBackground(Color.white);
 		initData();
 	}
 

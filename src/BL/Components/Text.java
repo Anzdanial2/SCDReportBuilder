@@ -3,6 +3,9 @@ package BL.Components;
 import DataLayer.DataSource;
 
 import javax.swing.*;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import java.awt.*;
 
 
@@ -10,17 +13,25 @@ import java.awt.*;
 public class Text extends Component{
 	private JPanel textPanel;
 	private String textInput;
-	public Text(String textInput, DataSource dataSource){
-		super(dataSource);
+	public Text(String textInput){
+		super(null);
 		textPanel = new JPanel();
 		this.textInput = textInput;
 	}
 	@Override
 	public void display() {
-		JTextArea sample2 = new JTextArea();
+		JTextPane sample2 = new JTextPane();
 		sample2.setText(textInput);
 		sample2.setFont(new Font("Arial", Font.BOLD, 14));
-		textPanel.add(sample2);
+
+		// Center-align the text
+		StyledDocument doc = sample2.getStyledDocument();
+		SimpleAttributeSet center = new SimpleAttributeSet();
+		StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+		doc.setParagraphAttributes(0, doc.getLength(), center, false);
+
+		textPanel.setLayout(new BorderLayout());
+		textPanel.add(new JScrollPane(sample2), BorderLayout.CENTER);
 	}
 	public JComponent getPanel(){
 		return textPanel;

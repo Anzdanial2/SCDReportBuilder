@@ -5,16 +5,18 @@ import DataLayer.DataSource;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class Table extends Component{
-	private JScrollPane tablePanel;
+public class Table extends Component {
+	private JTable table;
+	private JPanel tablePanel;  // Change the type to JPanel
 
 	public Table(DataSource datasource) {
 		super(datasource);
 	}
 
-	public JComponent getPanel(){
+	public JComponent getPanel() {
 		return tablePanel;
 	}
+
 	@Override
 	public void display() {
 
@@ -37,9 +39,12 @@ public class Table extends Component{
 
 		// Create a JScrollPane to display the table if needed
 		JScrollPane scrollPane = new JScrollPane(table);
-		tablePanel = scrollPane;
-		// Display the table (you might want to add this to a JFrame or another container)
-//		JOptionPane.showMessageDialog(null, scrollPane, "Table Display", JOptionPane.INFORMATION_MESSAGE);
+		tablePanel = new JPanel();  // Change this line to create a new JPanel
+		tablePanel.add(scrollPane);  // Add the JScrollPane to the JPanel
 
+		// Display the table (you might want to add this to a JFrame or another container)
+		// JOptionPane.showMessageDialog(null, scrollPane, "Table Display", JOptionPane.INFORMATION_MESSAGE);
+		this.table = table;
 	}
+	public JTable getTable(){return table;}
 }

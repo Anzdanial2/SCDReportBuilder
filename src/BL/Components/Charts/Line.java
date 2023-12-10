@@ -14,9 +14,13 @@ public class Line extends Chart {
 	private static final int AXIS_MARGIN = 80; // Increased margin for Y-axis label
 	private static final int POINT_SIZE = 8;
 	private Map<Double, Double> data;
+	private boolean displayLegends;
+	private boolean displayAxisValues;
 
-	public Line(DataSource dataSource) {
+	public Line(DataSource dataSource, boolean displayLegends, boolean displayAxisValues) {
 		super(dataSource);
+		this.displayLegends = displayLegends;
+		this.displayAxisValues = displayAxisValues;
 	}
 
 	@Override
@@ -45,6 +49,14 @@ public class Line extends Chart {
 		}
 	}
 
+	public void setDisplayLegends(boolean displayLegends) {
+		this.displayLegends = displayLegends;
+	}
+
+	// Method to set the display of axis values
+	public void setDisplayAxisValues(boolean displayAxisValues) {
+		this.displayAxisValues = displayAxisValues;
+	}
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -56,17 +68,19 @@ public class Line extends Chart {
 	}
 
 	private void drawLabels(Graphics g) {
-		g.setFont(new Font("Arial", Font.PLAIN, 12));
-		g.setColor(Color.BLACK);
+		if (displayLegends && legends != null) {
+			g.setFont(new Font("Arial", Font.PLAIN, 12));
+			g.setColor(Color.BLACK);
 
-		if (legends != null) {
-			if (legends.length > 0) {
-				// Draw the X-axis legend horizontally
-				g.drawString(legends[0], getWidth() / 2 - 50, getHeight() - 20); // Adjusted position for X-axis label
-			}
-			if (legends.length > 1) {
-				// Draw the Y-axis legend vertically
-				drawVerticalString(g, legends[1], 15, getHeight() / 2);
+			if (legends != null) {
+				if (legends.length > 0) {
+					// Draw the X-axis legend horizontally
+					g.drawString(legends[0], getWidth() / 2 - 50, getHeight() - 20); // Adjusted position for X-axis label
+				}
+				if (legends.length > 1) {
+					// Draw the Y-axis legend vertically
+					drawVerticalString(g, legends[1], 15, getHeight() / 2);
+				}
 			}
 		}
 	}
@@ -81,16 +95,18 @@ public class Line extends Chart {
 	}
 
 	private void drawYAxis(Graphics g) {
-		double maxFrequency = data.values().stream().mapToDouble(v -> v).max().orElse(0);
-		int yAxisHeight = getHeight() - AXIS_MARGIN * 2;
+		if(displayAxisValues) {
+			double maxFrequency = data.values().stream().mapToDouble(v -> v).max().orElse(0);
+			int yAxisHeight = getHeight() - AXIS_MARGIN * 2;
 
-		for (double i = 0; i <= maxFrequency; i += calculateYScale(maxFrequency)) {
-			int scaledY = AXIS_MARGIN + yAxisHeight - (int) (i * yAxisHeight / maxFrequency);
-			g.drawLine(AXIS_MARGIN - 5, scaledY, AXIS_MARGIN, scaledY);
-			g.drawString(String.format("%.2f", i), AXIS_MARGIN - 45, scaledY + 5);
+			for (double i = 0; i <= maxFrequency; i += calculateYScale(maxFrequency)) {
+				int scaledY = AXIS_MARGIN + yAxisHeight - (int) (i * yAxisHeight / maxFrequency);
+				g.drawLine(AXIS_MARGIN - 5, scaledY, AXIS_MARGIN, scaledY);
+				g.drawString(String.format("%.2f", i), AXIS_MARGIN - 45, scaledY + 5);
+			}
+
+			g.drawLine(AXIS_MARGIN, AXIS_MARGIN, AXIS_MARGIN, getHeight() - AXIS_MARGIN);
 		}
-
-		g.drawLine(AXIS_MARGIN, AXIS_MARGIN, AXIS_MARGIN, getHeight() - AXIS_MARGIN);
 	}
 
 	private double calculateYScale(double maxFrequency) {
@@ -102,19 +118,21 @@ public class Line extends Chart {
 	}
 
 	private void drawXAxis(Graphics g) {
-		int xAxisWidth = getWidth() - AXIS_MARGIN * 2;
-		int intervalWidth = xAxisWidth / (data.size() + 1);
+		if (displayAxisValues) {
+			int xAxisWidth = getWidth() - AXIS_MARGIN * 2;
+			int intervalWidth = xAxisWidth / (data.size() + 1);
 
-		List<Double> sortedKeys = data.keySet().stream().sorted().collect(Collectors.toList());
-		int currentX = AXIS_MARGIN + intervalWidth;
+			List<Double> sortedKeys = data.keySet().stream().sorted().collect(Collectors.toList());
+			int currentX = AXIS_MARGIN + intervalWidth;
 
-		for (double category : sortedKeys) {
-			g.drawLine(currentX, getHeight() - AXIS_MARGIN, currentX, getHeight() - AXIS_MARGIN + 5);
-			g.drawString(String.format("%.2f", category), currentX - 10, getHeight() - AXIS_MARGIN + 20);
-			currentX += intervalWidth;
+			for (double category : sortedKeys) {
+				g.drawLine(currentX, getHeight() - AXIS_MARGIN, currentX, getHeight() - AXIS_MARGIN + 5);
+				g.drawString(String.format("%.2f", category), currentX - 10, getHeight() - AXIS_MARGIN + 20);
+				currentX += intervalWidth;
+			}
+
+			g.drawLine(AXIS_MARGIN, getHeight() - AXIS_MARGIN, getWidth() - AXIS_MARGIN, getHeight() - AXIS_MARGIN);
 		}
-
-		g.drawLine(AXIS_MARGIN, getHeight() - AXIS_MARGIN, getWidth() - AXIS_MARGIN, getHeight() - AXIS_MARGIN);
 	}
 
 	private void drawLinesAndPoints(Graphics g) {
@@ -147,7 +165,7 @@ public class Line extends Chart {
 			frame.setSize(600, 400);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-			Line line = new Line(new Database(Database.ChartType.LINE));
+			Line line = new Line(new Database(Database.ChartType.LINE), false, false);
 			line.draw();
 			frame.add(line);
 

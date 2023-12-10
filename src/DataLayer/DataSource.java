@@ -4,6 +4,7 @@ import BL.Components.CustomPoint;
 
 import java.util.ArrayList;
 
+
 public abstract class DataSource {
 	protected ArrayList<CustomPoint> readData;
 	protected String []legends;

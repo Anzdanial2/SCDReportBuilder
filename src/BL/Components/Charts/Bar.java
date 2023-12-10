@@ -12,11 +12,15 @@ public class Bar extends Chart {
 
 	private static final int AXIS_MARGIN = 70;
 	private static final int BAR_WIDTH = 30;
+	private boolean displayLegends;
+	private boolean displayAxisValues;
 
 	private Map<String, Integer> data;
 
-	public Bar(DataSource dataSource) {
+	public Bar(DataSource dataSource, boolean displayLegends, boolean displayAxisValues) {
 		super(dataSource);
+		this.displayAxisValues = displayAxisValues;
+		this.displayLegends = displayLegends;
 	}
 
 	@Override
@@ -38,7 +42,13 @@ public class Bar extends Chart {
 		}
 	}
 
+	public void setDisplayLegends(boolean displayLegends) {
+		this.displayLegends = displayLegends;
+	}
 
+	public void setDisplayAxisValues(boolean displayAxisValues) {
+		this.displayAxisValues = displayAxisValues;
+	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -59,17 +69,19 @@ public class Bar extends Chart {
 	}
 
 	private void drawLabels(Graphics g) {
-		g.setFont(new Font("Arial", Font.PLAIN, 12));
-		g.setColor(Color.BLACK);
+		if (displayLegends && legends != null) {
+			g.setFont(new Font("Arial", Font.PLAIN, 12));
+			g.setColor(Color.BLACK);
 
-		if (legends != null) {
-			if (legends.length > 0) {
-				// Draw the X-axis legend horizontally
-				g.drawString(legends[0], getWidth() / 2 - 50, getHeight() - 20); // Adjusted position for X-axis label
-			}
-			if (legends.length > 1) {
-				// Draw the Y-axis legend vertically
-				drawVerticalString(g, legends[1], 15, getHeight() / 2);
+			if (legends != null) {
+				if (legends.length > 0) {
+					// Draw the X-axis legend horizontally
+					g.drawString(legends[0], getWidth() / 2 - 50, getHeight() - 20); // Adjusted position for X-axis label
+				}
+				if (legends.length > 1) {
+					// Draw the Y-axis legend vertically
+					drawVerticalString(g, legends[1], 15, getHeight() / 2);
+				}
 			}
 		}
 	}
@@ -83,16 +95,18 @@ public class Bar extends Chart {
 	}
 
 	private void drawYAxis(Graphics g) {
-		int maxFrequency = data.values().stream().max(Integer::compareTo).orElse(0);
-		int yAxisHeight = getHeight() - AXIS_MARGIN * 2;
+		if (displayAxisValues) {
+			int maxFrequency = data.values().stream().max(Integer::compareTo).orElse(0);
+			int yAxisHeight = getHeight() - AXIS_MARGIN * 2;
 
-		for (int i = 0; i <= maxFrequency + 5; i += calculateYScale(maxFrequency)) {
-			int scaledY = AXIS_MARGIN + yAxisHeight - i * yAxisHeight / (maxFrequency + 5);
-			g.drawLine(AXIS_MARGIN - 5, scaledY, AXIS_MARGIN, scaledY);
-			g.drawString(Integer.toString(i), AXIS_MARGIN - 30, scaledY + 5);
+			for (int i = 0; i <= maxFrequency + 5; i += calculateYScale(maxFrequency)) {
+				int scaledY = AXIS_MARGIN + yAxisHeight - i * yAxisHeight / (maxFrequency + 5);
+				g.drawLine(AXIS_MARGIN - 5, scaledY, AXIS_MARGIN, scaledY);
+				g.drawString(Integer.toString(i), AXIS_MARGIN - 30, scaledY + 5);
+			}
+
+			g.drawLine(AXIS_MARGIN, AXIS_MARGIN, AXIS_MARGIN, getHeight() - AXIS_MARGIN);
 		}
-
-		g.drawLine(AXIS_MARGIN, AXIS_MARGIN, AXIS_MARGIN, getHeight() - AXIS_MARGIN);
 	}
 
 	private int calculateYScale(int maxFrequency) {
@@ -108,20 +122,22 @@ public class Bar extends Chart {
 	}
 
 	private void drawXAxis(Graphics g) {
-		int numCategories = data.size();
-		int xAxisWidth = getWidth() - AXIS_MARGIN * 2;
+		if (displayAxisValues) {
+			int numCategories = data.size();
+			int xAxisWidth = getWidth() - AXIS_MARGIN * 2;
 
-		int intervalWidth = xAxisWidth / (numCategories + 1);
+			int intervalWidth = xAxisWidth / (numCategories + 1);
 
-		int currentX = AXIS_MARGIN + intervalWidth;
+			int currentX = AXIS_MARGIN + intervalWidth;
 
-		for (String category : data.keySet()) {
-			g.drawLine(currentX, getHeight() - AXIS_MARGIN, currentX, getHeight() - AXIS_MARGIN + 5);
-			g.drawString(category, currentX - 10, getHeight() - AXIS_MARGIN + 20);
-			currentX += intervalWidth;
+			for (String category : data.keySet()) {
+				g.drawLine(currentX, getHeight() - AXIS_MARGIN, currentX, getHeight() - AXIS_MARGIN + 5);
+				g.drawString(category, currentX - 10, getHeight() - AXIS_MARGIN + 20);
+				currentX += intervalWidth;
+			}
+
+			g.drawLine(AXIS_MARGIN, getHeight() - AXIS_MARGIN, getWidth() - AXIS_MARGIN, getHeight() - AXIS_MARGIN);
 		}
-
-		g.drawLine(AXIS_MARGIN, getHeight() - AXIS_MARGIN, getWidth() - AXIS_MARGIN, getHeight() - AXIS_MARGIN);
 	}
 
 	private void drawBars(Graphics g) {
@@ -143,7 +159,7 @@ public class Bar extends Chart {
 			frame.setSize(600, 400);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-			Bar bar = new Bar(new Database(Database.ChartType.BAR));
+			Bar bar = new Bar(new Database(Database.ChartType.BAR), false,false);
 			bar.draw();
 			frame.add(bar);
 

@@ -8,8 +8,8 @@ import javax.swing.*;
 public class Image extends Component{
 	private String imagePath;
 	private JPanel imagePanel;
-	public Image(String imagePath, DataSource dataSource){
-		super(dataSource);
+	public Image(String imagePath){
+		super(null);
 		imagePanel = new JPanel(new BorderLayout());
 		this.imagePath = imagePath;
 	}
